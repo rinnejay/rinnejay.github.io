@@ -27,7 +27,7 @@
 <h1 id="dokumentasi-kopi">Dokumentasi Kopi<a class="anchor" href="#dokumentasi-kopi" aria-label="tautan">#</a></h1>
 <nav class="toc"><h2>Isi halaman</h2><ul><li class="toc-h2"><a href="#jalur-pemakai-bahasa">Jalur pemakai bahasa</a></li><li class="toc-h2"><a href="#jalur-pengembang-compiler">Jalur pengembang compiler</a></li><li class="toc-h2"><a href="#contoh-kode">Contoh kode</a></li><li class="toc-h2"><a href="#prasyarat">Prasyarat</a></li><li class="toc-h2"><a href="#uji-cepat">Uji cepat</a></li></ul></nav>
 <p>Kopi (☕) adalah bahasa pemrograman statis ala Java yang <strong>compiler, type checker, generator assembly, dan mesin virtualnya ditulis 100% di C</strong>. Program Kopi bisa dikompilasi ke <strong>assembly aarch64</strong>, <strong>assembly x86-64</strong>, atau <strong>bytecode KOP1</strong> yang dijalankan <code>kopivm</code>.</p>
-<p>Versi <strong>HTML</strong> untuk GitHub Pages ada di folder ini (<code>index.html</code>, <code>style.css</code>, <code>.nojekyll</code>). Regenerasi setelah mengubah <code>.md</code>:</p>
+<p>Versi <strong>HTML</strong> untuk GitHub Pages ada di folder ini (<code>index.html</code>, <code>style.css</code>, <code>.nojekyll</code>) dan sudah live di <strong>https://rinnejay.github.io/</strong>. Regenerasi setelah mengubah <code>.md</code>:</p>
 <pre><code class="language-sh">make docs</code></pre>
 <p>Dokumentasi ini dibagi menjadi jalur belajar dan jalur kontributor.</p>
 <h2 id="jalur-pemakai-bahasa">Jalur pemakai bahasa<a class="anchor" href="#jalur-pemakai-bahasa" aria-label="tautan">#</a></h2>
@@ -82,7 +82,7 @@
 </ul>
 <h2 id="uji-cepat">Uji cepat<a class="anchor" href="#uji-cepat" aria-label="tautan">#</a></h2>
 <pre><code class="language-sh">make            # kopicc + kopivm
-make test       # 114 uji (a64, VM, sintaks x64)
+make test       # 117 uji (a64, VM, sintaks x64, dokumen)
 ./kopicc --version</code></pre>
 <p>Jika semua hijau, Anda siap mengikuti tutorial.</p>
 <footer class="foot">
