@@ -1,0 +1,283 @@
+<h2>Tipe Data Primitif</h2>
+<div class="table-wrap"><table><thead><tr><th>Tipe</th><th>Ukuran</th><th>Range / Catatan</th></tr></thead><tbody>
+<tr><td><code>boolean</code></td><td>1 byte</td><td><code>true</code> / <code>false</code></td></tr>
+<tr><td><code>int</code></td><td>4 byte</td><td>-2,147,483,648 .. 2,147,483,647 (int32)</td></tr>
+<tr><td><code>long</code></td><td>8 byte</td><td>-9.22e18 .. 9.22e18 (int64), suffix <code>L</code></td></tr>
+<tr><td><code>float</code></td><td>4 byte</td><td>IEEE-754 single, suffix <code>f</code></td></tr>
+<tr><td><code>double</code></td><td>8 byte</td><td>IEEE-754 double</td></tr>
+<tr><td><code>String</code></td><td>ref</td><td>Immutable, packed (1 char = 1 slot), UTF-8 internal</td></tr>
+<tr><td><code>fn</code></td><td>ref</td><td>Closure: <code>fn (int a) => a + 1</code></td></tr>
+</tbody></table></div>
+
+<h2>Tipe Array</h2>
+<p>Array adalah reference type dengan header panjang. Sintaks deklarasi:</p>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>int[] a = new int[10];       // 10 elemen, init 0
+int[] b = new int[] {1, 2, 3};  // literal array
+float[] c = new float[5] {1.0f}; // parsial: sisa 0.0f
+String[] d = new String[3];     // null elements</code></pre>
+</div>
+
+<div class="alert alert-info">
+<svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+<div><strong>Array bounds checked:</strong> Akses <code>a[i]</code> dengan <code>i < 0</code> atau <code>i >= a.length</code> → runtime panic.</div>
+</div>
+
+<h2>Packed Array (1 byte/elemen)</h2>
+<p>Untuk buffer byte/uint8 efisien memori (v1.43+):</p>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>byte[] buf = new byte[1024];      // 1 byte per elemen
+uint8[] u8 = new uint8[512];      // alias byte[]
+buf[0] = 255;                     // 0..255</code></pre>
+</div>
+<p>Packed array cocok untuk I/O jaringan, texture, audio buffer. Konversi dari String: <code>Net.strbytes(str)</code>.</p>
+
+<h2>Class & Object</h2>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>class Player {
+    // Instance fields
+    String nama;
+    int hp;
+    float x, y;
+    
+    // Static field (konstanta)
+    static int MAX_HP = 100;
+    
+    // Constructor
+    Player(String n) {
+        this.nama = n;
+        this.hp = MAX_HP;
+    }
+    
+    // Instance method
+    void takeDamage(int dmg) {
+        this.hp = this.hp - dmg;
+        if (this.hp < 0) this.hp = 0;
+    }
+    
+    // Static method
+    static Player create(String n) {
+        return new Player(n);
+    }
+}
+
+// Usage
+Player p = Player.create("CJ");
+p.takeDamage(10);</code></pre>
+</div>
+
+<h3>Visibility</h3>
+<p>Semua member <code>public</code> (tidak ada private/protected). Field instance default 0/null/false.</p>
+
+<h3>Inheritance</h3>
+<p>Tidak ada inheritance class. Komposisi via field + interface-like pattern (struct dengan method).</p>
+
+<h2>Control Flow</h2>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>// if-else
+if (x > 0) {
+    System.out.println("positif");
+} else if (x < 0) {
+    System.out.println("negatif");
+} else {
+    System.out.println("nol");
+}
+
+// while
+int i = 0;
+while (i < 10) {
+    if (i == 5) { i = i + 1; continue; }
+    System.out.println(i);
+    i = i + 1;
+}
+
+// for (C-style)
+for (int i = 0; i < 10; i = i + 1) {
+    System.out.println(i);
+}
+
+// switch (integer/string)
+switch (cmd) {
+    case "start": start(); break;
+    case "stop": stop(); break;
+    default: unknown();
+}
+
+// ternary
+int max = (a > b) ? a : b;</code></pre>
+</div>
+
+<h2>Functions & Closures</h2>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>// Static method
+static int add(int a, int b) { return a + b; }
+
+// Lambda (fn) — bisa capture variabel lokal
+fn adder = (int x) => x + 1;
+int r = adder(5);  // 6
+
+// Multi-statement lambda
+fn worker = (int id) => {
+    System.out.println("Worker " + id + " start");
+    Net.sleep(100);
+    System.out.println("Worker " + id + " done");
+    return id * 2;
+};
+
+// Closure capture
+int base = 10;
+fn addBase = (int x) => base + x;  // capture base
+System.out.println(addBase(5));    // 15</code></pre>
+</div>
+
+<h2>Generics</h2>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>class Box<T> {
+    T value;
+    Box(T v) { this.value = v; }
+    T get() { return this.value; }
+}
+
+Box<int> ibox = new Box<int>(42);
+Box<String> sbox = new Box<String>("hello");
+int i = ibox.get();
+String s = sbox.get();
+
+// Generic method
+static <T> T first(T[] arr) { return arr.length > 0 ? arr[0] : null; }</code></pre>
+</div>
+
+<h2>Memory: malloc Block</h2>
+<p>Arena allocation eksplisit — semua alokasi di dalam blok dibebaskan sekaligus:</p>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>// Eksplisit capacity (bytes)
+malloc<1024 * 1024> {
+    int[] big = new int[100000];
+    String s = "data " + big.length;
+    // big & s dibebaskan otomatis di sini
+}
+
+// Otomatis (mmap 4096 MB, MAP_NORESERVE)
+malloc{} {
+    int[] huge = new int[50000000];  // ~200 MB virtual, fisik saat disentuh
+    // dibebaskan di akhir blok
+}</code></pre>
+</div>
+
+<div class="alert alert-warning">
+<svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+<div><strong>Arena bersarang:</strong> <code>malloc</code> bisa bersarang — arena dalam mewarisi kapasitas parent. Objek yang lolos ke luar arena (via return) akan <em>dangling</em> — jangan lakukan itu.</div>
+</div>
+
+<h2>Exception Handling (v1.49+)</h2>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>try {
+    int fd = Net.openr("config.json");
+    if (fd < 0) throw "file not found";
+    // ...
+} catch (String err) {
+    System.out.println("Error: " + err);
+} finally {
+    // cleanup (opsional)
+}</code></pre>
+</div>
+
+<h2>Builtin Net.* — System Calls</h2>
+<p>Semua syscall native via namespace <code>Net</code>. Ringkasan:</p>
+
+<div class="tabs">
+  <div class="tab-list">
+    <button class="tab-btn active" data-target="#net-io">I/O & File</button>
+    <button class="tab-btn" data-target="#net-sock">Socket</button>
+    <button class="tab-btn" data-target="#net-thread">Thread & Sync</button>
+    <button class="tab-btn" data-target="#net-gfx">Graphics</button>
+  </div>
+  <div class="tab-pane active" id="net-io">
+    <div class="table-wrap"><table><thead><tr><th>Fungsi</th><th>Signature</th><th>Desc</th></tr></thead><tbody>
+    <tr><td><code>openr</code></td><td><code>int openr(String path)</code></td><td>Buka file read-only, return fd</td></tr>
+    <tr><td><code>openb</code></td><td><code>int openb(String path, int flags, int mode)</code></td><td>Buka file (O_RDWR|O_CREAT dst)</td></tr>
+    <tr><td><code>rdb</code></td><td><code>long rdb(int fd)</code></td><td>Baca 1 byte (0..255), -1 = EOF</td></tr>
+    <tr><td><code>wrb</code></td><td><code>void wrb(int fd, int byte)</code></td><td>Tulis 1 byte</td></tr>
+    <tr><td><code>recvb</code></td><td><code>int recvb(int fd, int[] buf)</code></td><td>Baca ke buffer, return bytes read</td></tr>
+    <tr><td><code>sendb</code></td><td><code>int sendb(int fd, int[] buf)</code></td><td>Tulis dari buffer</td></tr>
+    <tr><td><code>seek</code></td><td><code>void seek(int fd, int pos, int whence)</code></td><td>SEEK_SET=0, CUR=1, END=2</td></tr>
+    <tr><td><code>close</code></td><td><code>void close(int fd)</code></td><td>Tutup fd</td></tr>
+    <tr><td><code>mkdirb</code></td><td><code>int mkdirb(String path)</code></td><td>Buat direktori</td></tr>
+    <tr><td><code>unlinkb</code></td><td><code>int unlinkb(String path)</code></td><td>Hapus file</td></tr>
+    <tr><td><code>renameb</code></td><td><code>int renameb(String old, String nw)</code></td><td>Rename</td></tr>
+    <tr><td><code>assetOpen</code></td><td><code>int assetOpen(String path)</code></td><td>Android AAssetManager</td></tr>
+    <tr><td><code>assetRead</code></td><td><code>int assetRead(int fd, int[] buf, int len)</code></td><td>Baca asset</td></tr>
+    <tr><td><code>assetSize</code></td><td><code>long assetSize(String path)</code></td><td>Ukuran asset</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="tab-pane" id="net-sock">
+    <div class="table-wrap"><table><thead><tr><th>Fungsi</th><th>Signature</th><th>Desc</th></tr></thead><tbody>
+    <tr><td><code>socket</code></td><td><code>int socket(int domain, int type, int proto)</code></td><td>domain=AF_INET(2), type=SOCK_STREAM(1)/DGRAM(2)</td></tr>
+    <tr><td><code>connect</code></td><td><code>int connect(int fd, int ip, int port)</code></td><td>ip = packed int (a<<24|b<<16|c<<8|d)</td></tr>
+    <tr><td><code>bind</code></td><td><code>int bind(int fd, int ip, int port)</code></td><td>Bind server</td></tr>
+    <tr><td><code>listen</code></td><td><code>int listen(int fd, int backlog)</code></td><td>Listen</td></tr>
+    <tr><td><code>accept</code></td><td><code>int accept(int fd)</code></td><td>Accept koneksi, return fd baru</td></tr>
+    <tr><td><code>sendto</code></td><td><code>int sendto(int fd, int ip, int port, int[] buf)</code></td><td>UDP send</td></tr>
+    <tr><td><code>recvfrom</code></td><td><code>int recvfrom(int fd, int[] buf, int[] from)</code></td><td>UDP recv, from[0]=ip, from[1]=port</td></tr>
+    <tr><td><code>shutdown</code></td><td><code>int shutdown(int fd, int how)</code></td><td>SHUT_RD=0, WR=1, RDWR=2</td></tr>
+    <tr><td><code>setsockopt</code></td><td><code>int setsockopt(int fd, int lvl, int opt, int val)</code></td><td>SO_REUSEADDR dst</td></tr>
+    <tr><td><code>setnonblock</code></td><td><code>int setnonblock(int fd, int on)</code></td><td>Non-blocking mode</td></tr>
+    <tr><td><code>pollfd</code></td><td><code>int pollfd(int fd, int events, int timeout)</code></td><td>Poll fd, events=POLLIN(1)|POLLOUT(4)</td></tr>
+    <tr><td><code>socketOpen</code></td><td><code>int socketOpen(String host, int port)</code></td><td>High-level TCP connect</td></tr>
+    <tr><td><code>socketRead</code></td><td><code>int socketRead(int fd, int[] buf, int len)</code></td><td>Read exact</td></tr>
+    <tr><td><code>socketWrite</code></td><td><code>int socketWrite(int fd, int[] buf, int len)</code></td><td>Write all</td></tr>
+    <tr><td><code>socketClose</code></td><td><code>void socketClose(int fd)</code></td><td>Close socket</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="tab-pane" id="net-thread">
+    <div class="table-wrap"><table><thead><tr><th>Fungsi</th><th>Signature</th><th>Desc</th></tr></thead><tbody>
+    <tr><td><code>threadspawn</code></td><td><code>long threadspawn(fn body)</code></td><td>Spawn thread baru, body = lambda tanpa argumen. Return handle</td></tr>
+    <tr><td><code>threadjoin</code></td><td><code>long threadjoin(long handle)</code></td><td>Join thread, return nilai balik body</td></tr>
+    <tr><td><code>threadalive</code></td><td><code>int threadalive(long handle)</code></td><td>1 jika thread masih hidup</td></tr>
+    <tr><td><code>threadid</code></td><td><code>int threadid(long handle)</code></td><td>ID thread (1 = main)</td></tr>
+    <tr><td><code>threadself</code></td><td><code>int threadself()</code></td><td>ID thread saat ini</td></tr>
+    <tr><td><code>threadyield</code></td><td><code>void threadyield()</code></td><td>Yield CPU</td></tr>
+    <tr><td><code>channew</code></td><td><code>long channew(int cap)</code></td><td>Channel CSP, cap >= 1</td></tr>
+    <tr><td><code>chansend</code></td><td><code>int chansend(long ch, long v)</code></td><td>Kirim long (blocking)</td></tr>
+    <tr><td><code>chanrecv</code></td><td><code>long chanrecv(long ch)</code></td><td>Terima long (0 = closed)</td></tr>
+    <tr><td><code>chanrecvok</code></td><td><code>long chanrecvok(long ch, int[] ok)</code></td><td>Terima + ok[0]=1/0</td></tr>
+    <tr><td><code>chansendfn</code></td><td><code>int chansendfn(long ch, fn f)</code></td><td>Kirim closure</td></tr>
+    <tr><td><code>chanrecvfn</code></td><td><code>fn chanrecvfn(long ch)</code></td><td>Terima closure</td></tr>
+    <tr><td><code>chanclose</code></td><td><code>int chanclose(long ch)</code></td><td>Tutup channel</td></tr>
+    <tr><td><code>chanlen</code></td><td><code>int chanlen(long ch)</code></td><td>Jumlah item di buffer</td></tr>
+    <tr><td><code>chanclosed</code></td><td><code>int chanclosed(long ch)</code></td><td>1 jika closed</td></tr>
+    <tr><td><code>mutexnew</code></td><td><code>long mutexnew()</code></td><td>Mutex baru</td></tr>
+    <tr><td><code>mutexlock</code></td><td><code>int mutexlock(long m)</code></td><td>Lock (blocking)</td></tr>
+    <tr><td><code>mutexunlock</code></td><td><code>int mutexunlock(long m)</code></td><td>Unlock</td></tr>
+    <tr><td><code>mutextrylock</code></td><td><code>int mutextrylock(long m)</code></td><td>Try lock, return 1/0</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="tab-pane" id="net-gfx">
+    <div class="table-wrap"><table><thead><tr><th>Fungsi</th><th>Signature</th><th>Desc</th></tr></thead><tbody>
+    <tr><td><code>glInit</code></td><td><code>int glInit(surface, w, h)</code></td><td>Init EGL/GLES, surface=ANativeWindow* atau 0</td></tr>
+    <tr><td><code>glShutdown</code></td><td><code>void glShutdown()</code></td><td>Cleanup GL</td></tr>
+    <tr><td><code>glSetViewport</code></td><td><code>void glSetViewport(x, y, w, h)</code></td><td>Viewport</td></tr>
+    <tr><td><code>glCreateProgram</code></td><td><code>int glCreateProgram(vert[], frag[])</code></td><td>Shader program (packed string array)</td></tr>
+    <tr><td><code>glCreateBuffer</code></td><td><code>int glCreateBuffer(kind, count, float[])</code></td><td>Vertex buffer</td></tr>
+    <tr><td><code>glUpdateBuffer</code></td><td><code>void glUpdateBuffer(id, offset, float[])</code></td><td>Update buffer</td></tr>
+    <tr><td><code>glCreateIndexBuffer</code></td><td><code>int glCreateIndexBuffer(count, int[])</code></td><td>Index buffer</td></tr>
+    <tr><td><code>glCreateTexture</code></td><td><code>int glCreateTexture(w, h, fmt, int[])</code></td><td>fmt=0=RGBA8</td></tr>
+    <tr><td><code>glBindTexture</code></td><td><code>void glBindTexture(id)</code></td><td>Bind texture</td></tr>
+    <tr><td><code>glSetProjection</code></td><td><code>void glSetProjection(l, r, b, t)</code></td><td>Ortho 2D projection</td></tr>
+    <tr><td><code>glDrawIndexed</code></td><td><code>void glDrawIndexed(p, vb, ib, cnt, inst, fi, vo, fii)</code></td><td>Draw call</td></tr>
+    <tr><td><code>glClear</code></td><td><code>void glClear(rgba)</code></td><td>Clear color</td></tr>
+    <tr><td><code>glPresent</code></td><td><code>int glPresent()</code></td><td>Swap buffers</td></tr>
+    <tr><td><code>glReadPixels</code></td><td><code>int glReadPixels(x, y, w, h, int[])</code></td><td>Readback RGBA</td></tr>
+    <tr><td><code>vkInit</code></td><td><code>int vkInit(surface, w, h)</code></td><td>Vulkan init</td></tr>
+    <tr><td><code>audioInit</code></td><td><code>int audioInit(backend)</code></td><td>0=null, 1=OpenAL, 2=OpenSL</td></tr>
+    </tbody></table></div>
+  </div>
+</div>

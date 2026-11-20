@@ -1,0 +1,204 @@
+<h2>Android Integration</h2>
+<p>Kopi di Android berjalan via <code>libkopivm.so</code> (JNI) + <code>kopivm_android.c</code>. Bytecode <code>.kbc</code> sama dengan desktop — portable 100%.</p>
+
+<h3>Arsitektur</h3>
+<div class="card-grid">
+  <div class="card">
+    <div class="card-title">libkopivm.so</div>
+    <div class="card-desc">Shared library ARM64, eksport <code>kopivm_android_load_mem</code>, <code>kopivm_android_run</code>, dll.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">JNI Wrapper</div>
+    <div class="card-desc">Java/Kotlin class <code>KopiVM</code> load library, pass bytecode, call run() tiap frame.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">AAssetManager</div>
+    <div class="card-desc">Builtin <code>Net.assetOpen/Read/Size</code> baca langsung dari APK assets.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">EGL/GLES/Vulkan</div>
+    <div class="card-desc"><code>Net.glInit/vkInit</code> terima <code>ANativeWindow*</code> dari <code>SurfaceView</code>.</div>
+  </div>
+</div>
+
+<h3>Build libkopivm.so</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">sh</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>cd ~/kopi
+make android-arm64
+# Output: vm-android/libkopivm.so
+
+# Copy ke Android project
+cp vm-android/libkopivm.so android/app/src/main/jniLibs/arm64-v8a/</code></pre>
+</div>
+
+<h3>JNI API (C)</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">c</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>#include "kopivm.h"
+
+// Load bytecode dari memory (asset)
+int kopivm_android_load_mem(const void* data, size_t len);
+
+// Load dari file internal storage
+int kopivm_android_load_file(const char* path);
+
+// Jalankan satu frame / sampai selesai
+long kopivm_android_run(void);
+
+// Heap usage (slots)
+long kopivm_android_heap_used(void);
+
+// Thread count (main + workers)
+int kopivm_android_thread_count(void);</code></pre>
+</div>
+
+<h3>Kotlin/Java Wrapper</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kotlin</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>package com.kopi.vm
+
+class KopiVM {
+    companion object {
+        @JvmStatic
+        external fun loadMem(data: ByteArray): Int
+        @JvmStatic
+        external fun loadFile(path: String): Int
+        @JvmStatic
+        external fun run(): Long
+        @JvmStatic
+        external fun heapUsed(): Long
+        @JvmStatic
+        external fun threadCount(): Int
+    }
+
+    init {
+        System.loadLibrary("kopivm")
+    }
+}
+
+// Usage di MainActivity
+class MainActivity : AppCompatActivity() {
+    private lateinit var kopiVM: KopiVM
+    private lateinit var surfaceView: SurfaceView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Load bytecode dari assets
+        val kbc = assets.open("game.kbc").readBytes()
+        KopiVM.loadMem(kbc)
+
+        // Setup SurfaceView untuk GL
+        surfaceView = SurfaceView(this).apply {
+            holder.addCallback(object : SurfaceHolder.Callback {
+                override fun surfaceCreated(holder: SurfaceHolder) {
+                    // surface.handle = ANativeWindow_fromSurface
+                    // pass ke kopivm via JNI extension
+                }
+            })
+            setZOrderOnTop(true)
+        }
+        setContentView(surfaceView)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Game loop
+        Thread {
+            while (!Thread.interrupted()) {
+                KopiVM.run()
+                Thread.sleep(16)  // ~60 FPS
+            }
+        }.start()
+    }
+}</code></pre>
+</div>
+
+<h3>AndroidManifest Permissions</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">xml</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code><uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    android:maxSdkVersion="28" />
+
+<!-- Untuk audio OpenSL -->
+<uses-feature android:name="android.hardware.audio.output" android:required="true" />
+<!-- Untuk Vulkan -->
+<uses-feature android:name="android.hardware.vulkan.version" android:required="false" />
+<uses-feature android:name="android.hardware.vulkan.compute" android:required="false" /></code></pre>
+</div>
+
+<h3>Asset Loading</h3>
+<p>Bytecode <code>.kbc</code> + aset (texture, model, audio) diletakkan di <code>app/src/main/assets/</code>.</p>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">text</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>assets/
+├── game.kbc              # bytecode utama
+├── world_manifest.json   # streaming manifest
+├── tex/
+│   ├── desgreengrass.png
+│   └── ...
+└── kpak/
+    ├── ganghous01_lax.kpak
+    ├── lae2_roads07.kpak
+    └── ...</code></pre>
+</div>
+
+<p>Di Kopi, baca asset via builtin:</p>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>int fd = Net.assetOpen("tex/desgreengrass.png");
+if (fd >= 0) {
+    long size = Net.assetSize("tex/desgreengrass.png");
+    int[] buf = new int[(size + 3) / 4];
+    Net.assetRead(fd, buf, buf.length * 4);
+    int tex = Net.glCreateTexture(w, h, 0, buf);
+    Net.assetClose(fd);
+}</code></pre>
+</div>
+
+<h3>Surface & GL Context</h3>
+<p>Native window handle dari <code>SurfaceHolder</code>:</p>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">c</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>// JNI helper (di kopivm_android.c)
+JNIEXPORT void JNICALL
+Java_com_kopi_vm_KopiVM_nativeSetSurface(JNIEnv* env, jclass cls, jobject surface) {
+    ANativeWindow* window = ANativeWindow_fromSurface(env, surface);
+    // store window untuk glInit/vkInit
+}</code></pre>
+</div>
+
+<p>Di Kopi:</p>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>// surface handle = 0 untuk default, atau pointer ANativeWindow
+int r = Net.glInit(surface_handle, width, height);</code></pre>
+</div>
+
+<h3>Debugging Android</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">sh</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code># Logcat filter
+adb logcat -s "KopiVM" "kopivm" "*:S"
+
+# Copy debug log dari internal storage
+adb shell cat /data/data/com.yourgame/files/gtasa_kopu_debug.txt
+
+# PPM snapshot (KOPISIM)
+adb shell "KOPISIM=1 MAXFRAME=10 /data/data/com.yourgame/files/kopivm /data/data/com.yourgame/files/game.kbc"
+adb pull /data/data/com.yourgame/files/build/sim1.ppm</code></pre>
+</div>
+
+<h3>Performance Tips</h3>
+<ul>
+  <li>Gunakan <code>malloc{}</code> untuk alokasi besar (arena virtual 4 TB, fisik on-demand)</li>
+  <li>Minimalkan JNI call — batch di sisi Kopi</li>
+  <li>Texture atlas: pack multiple textures, bind once per frame</li>
+  <li>Frustum culling + distance culling di <code>Renderer3D</code> (built-in)</li>
+  <li>MSAA via <code>RenderConfig.samples = 4</code> (GlesSubmit)</li>
+</ul>

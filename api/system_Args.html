@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API: Args — Dokumentasi Kopi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #1c2128;
+            --bg-code: #1a1f26;
+            --bg-hover: #21262d;
+            --border-color: #30363d;
+            --border-hover: #8b949e;
+            --text-primary: #e6edf3;
+            --text-secondary: #9198a1;
+            --text-muted: #6e7681;
+            --accent: #58a6ff;
+            --accent-hover: #79b8ff;
+            --accent-dim: #1f3a5f;
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #f85149;
+            --purple: #bc8cff;
+            --green: #7ee787;
+            --orange: #ffa657;
+            --yellow: #f2cc60;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 3px 8px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --sidebar-width: 280px;
+            --header-height: 60px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 15px;
+            min-height: 100vh;
+        }
+
+        /* ===== Layout ===== */
+        .layout { display: flex; min-height: 100vh; }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            overflow-y: auto;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 6px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+        .sidebar::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
+
+        .content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 32px 48px 64px;
+            max-width: 1200px;
+        }
+
+        .content-inner { max-width: 880px; }
+
+        /* ===== Header ===== */
+        .topbar {
+            position: fixed;
+            top: 0; right: 0; left: var(--sidebar-width);
+            height: var(--header-height);
+            background: rgba(13, 17, 23, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            z-index: 90;
+        }
+
+        .topbar-breadcrumb {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 14px; color: var(--text-secondary);
+        }
+        .topbar-breadcrumb a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+        .topbar-breadcrumb a:hover { color: var(--accent); }
+        .topbar-breadcrumb .sep { color: var(--text-muted); }
+        .topbar-breadcrumb .current { color: var(--text-primary); font-weight: 500; }
+
+        .topbar-actions { display: flex; align-items: center; gap: 12px; }
+
+        .search-box {
+            position: relative; display: flex; align-items: center;
+        }
+        .search-box input {
+            width: 260px; padding: 7px 12px 7px 34px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 13px; font-family: inherit;
+            transition: all 0.15s;
+        }
+        .search-box input:focus {
+            outline: none; border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+            width: 320px;
+        }
+        .search-box svg {
+            position: absolute; left: 10px;
+            width: 15px; height: 15px;
+            color: var(--text-muted); pointer-events: none;
+        }
+
+        .kbd {
+            display: inline-flex; align-items: center;
+            padding: 2px 6px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* ===== Logo / Brand ===== */
+        .brand {
+            display: flex; align-items: center; gap: 10px;
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .brand-logo {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 18px; color: white;
+        }
+        .brand-name { font-weight: 700; font-size: 17px; }
+        .brand-version {
+            font-size: 11px; color: var(--text-muted);
+            margin-left: auto;
+            background: var(--bg-tertiary);
+            padding: 2px 8px; border-radius: 10px;
+        }
+
+        /* ===== Sidebar Navigation ===== */
+        .nav-section { padding: 16px 12px 8px; }
+        .nav-section-title {
+            font-size: 11px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.8px;
+            color: var(--text-muted);
+            padding: 0 12px 8px;
+        }
+        .nav-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13.5px;
+            transition: all 0.15s;
+        }
+        .nav-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+        .nav-item.active {
+            background: var(--accent-dim);
+            color: var(--accent);
+            font-weight: 500;
+        }
+        .nav-item .nav-icon {
+            width: 18px; height: 18px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0.8;
+        }
+        .nav-badge {
+            margin-left: auto;
+            font-size: 10px; font-weight: 600;
+            padding: 1px 6px; border-radius: 8px;
+        }
+        .nav-badge.new { background: rgba(63, 185, 80, 0.15); color: var(--green); }
+        .nav-badge.beta { background: rgba(210, 153, 34, 0.15); color: var(--yellow); }
+        .nav-badge.stable { background: rgba(88, 166, 255, 0.15); color: var(--accent); }
+
+        /* ===== Typography ===== */
+        h1 {
+            font-size: 32px; font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        h2 {
+            font-size: 22px; font-weight: 700;
+            margin: 40px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        h3 {
+            font-size: 17px; font-weight: 600;
+            margin: 28px 0 12px;
+        }
+        h4 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+        p { margin-bottom: 14px; color: var(--text-primary); }
+        p.lead { font-size: 16.5px; color: var(--text-secondary); margin-bottom: 24px; }
+        strong { font-weight: 600; color: var(--text-primary); }
+        em { color: var(--text-secondary); }
+        a { color: var(--accent); text-decoration: none; transition: color 0.15s; }
+        a:hover { color: var(--accent-hover); text-decoration: underline; }
+        code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; }
+
+        .doc-meta {
+            display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+            margin-bottom: 28px; padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .meta-pill {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: 11.5px; font-weight: 500;
+            padding: 3px 10px; border-radius: 10px;
+        }
+        .meta-pill.version { background: rgba(88, 166, 255, 0.12); color: var(--accent); }
+        .meta-pill.category { background: rgba(188, 140, 255, 0.12); color: var(--purple); }
+        .meta-pill.status { background: rgba(63, 185, 80, 0.12); color: var(--green); }
+
+        /* ===== Code Blocks ===== */
+        .code-block {
+            position: relative;
+            margin: 16px 0 24px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background: var(--bg-code);
+        }
+        .code-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 8px 14px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .code-lang {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-weight: 600; letter-spacing: 0.3px;
+        }
+        .code-copy {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 3px 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 11px; color: var(--text-muted);
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+        .code-copy:hover { color: var(--text-primary); border-color: var(--border-hover); }
+        .code-copy.copied { color: var(--green); border-color: rgba(63, 185, 80, 0.4); }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.65;
+            color: var(--text-primary);
+        }
+        pre::-webkit-scrollbar { height: 6px; }
+        pre::-webkit-scrollbar-track { background: transparent; }
+        pre::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+
+        code.inline, p code, li code {
+            background: var(--bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+            color: var(--orange);
+        }
+
+        /* Syntax highlighting (Kopi) */
+        .tok-kw { color: var(--purple); font-weight: 600; }        /* class, void, int, if... */
+        .tok-type { color: var(--orange); }                        /* int, float, String... */
+        .tok-fn { color: var(--accent); }                          /* function names */
+        .tok-str { color: var(--green); }                          /* strings */
+        .tok-num { color: var(--yellow); }                         /* numbers */
+        .tok-com { color: var(--text-muted); font-style: italic; } /* comments */
+        .tok-op { color: #ff7b72; }                                /* operators */
+        .tok-ann { color: var(--purple); }                         /* @annotations */
+        .tok-gens { color: var(--green); font-weight: 600; }       /* <T> */
+
+        /* ===== Tables ===== */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 16px 0 24px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+        table {
+            width: 100%; border-collapse: collapse;
+            font-size: 13.5px;
+        }
+        thead { background: var(--bg-secondary); }
+        th {
+            text-align: left; padding: 10px 14px;
+            font-weight: 600; font-size: 12px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: var(--bg-hover); }
+        td code { color: var(--accent); }
+
+        /* ===== Alerts / Callouts ===== */
+        .alert {
+            display: flex; gap: 12px;
+            padding: 14px 16px;
+            margin: 16px 0 24px;
+            border-radius: var(--radius-md);
+            border-left: 3px solid;
+            font-size: 14px;
+        }
+        .alert-icon { flex-shrink: 0; margin-top: 2px; }
+        .alert p:last-child { margin-bottom: 0; }
+        .alert-info { background: rgba(88, 166, 255, 0.08); border-color: var(--accent); }
+        .alert-info .alert-icon { color: var(--accent); }
+        .alert-success { background: rgba(63, 185, 80, 0.08); border-color: var(--success); }
+        .alert-success .alert-icon { color: var(--success); }
+        .alert-warning { background: rgba(210, 153, 34, 0.08); border-color: var(--warning); }
+        .alert-warning .alert-icon { color: var(--warning); }
+        .alert-danger { background: rgba(248, 81, 73, 0.08); border-color: var(--danger); }
+        .alert-danger .alert-icon { color: var(--danger); }
+
+        /* ===== Cards / Grid ===== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            text-decoration: none;
+        }
+        .card-icon {
+            width: 36px; height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+        .card-title { font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+        .card-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+        .card-tag {
+            display: inline-block; margin-top: 10px;
+            font-size: 11px; color: var(--text-muted);
+        }
+
+        /* ===== API Signature Blocks ===== */
+        .api-sig {
+            background: var(--bg-code);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+        .api-sig .ret { color: var(--orange); }
+        .api-sig .name { color: var(--accent); font-weight: 600; }
+        .api-sig .param { color: var(--text-primary); }
+        .api-sig .kw { color: var(--purple); }
+        .api-desc { margin: -6px 0 20px; padding-left: 16px; font-size: 14px; color: var(--text-secondary); border-left: 2px solid var(--border-color); }
+
+        /* ===== Tabs ===== */
+        .tabs { margin: 20px 0 24px; }
+        .tab-list {
+            display: flex; gap: 2px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .tab-btn {
+            padding: 8px 16px;
+            background: none; border: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            color: var(--text-secondary);
+            font-size: 13.5px; font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+        .tab-btn:hover { color: var(--text-primary); }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .tab-pane { display: none; padding-top: 16px; }
+        .tab-pane.active { display: block; }
+
+        /* ===== TOC (right sidebar) ===== */
+        .toc {
+            position: fixed;
+            right: 24px; top: calc(var(--header-height) + 24px);
+            width: 220px;
+            font-size: 12.5px;
+            max-height: calc(100vh - var(--header-height) - 48px);
+            overflow-y: auto;
+        }
+        .toc-title { font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 10.5px; letter-spacing: 0.8px; margin-bottom: 8px; }
+        .toc a {
+            display: block; padding: 4px 0 4px 12px;
+            color: var(--text-muted); text-decoration: none;
+            border-left: 2px solid transparent;
+            transition: all 0.15s;
+        }
+        .toc a:hover { color: var(--text-primary); }
+        .toc a.active { color: var(--accent); border-left-color: var(--accent); }
+        .toc a.h3 { padding-left: 24px; }
+
+        /* ===== Pagination ===== */
+        .pagination {
+            display: flex; justify-content: space-between; gap: 16px;
+            margin-top: 48px; padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+        .page-link {
+            display: flex; flex-direction: column; gap: 4px;
+            padding: 14px 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            transition: all 0.2s;
+            min-width: 200px;
+        }
+        .page-link:hover { border-color: var(--accent); background: var(--bg-hover); }
+        .page-label { font-size: 11.5px; color: var(--text-muted); }
+        .page-title { font-size: 14.5px; font-weight: 600; color: var(--text-primary); }
+        .page-link.next { margin-left: auto; text-align: right; }
+
+        /* ===== Mobile ===== */
+        .menu-toggle {
+            display: none;
+            position: fixed; bottom: 20px; right: 20px;
+            width: 48px; height: 48px;
+            background: var(--accent); border: none;
+            border-radius: 50%; cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            z-index: 200;
+            align-items: center; justify-content: center;
+            color: white;
+        }
+
+        @media (max-width: 1024px) {
+            .toc { display: none; }
+        }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .content { margin-left: 0; padding: calc(var(--header-height) + 16px) 20px 80px; }
+            .topbar { left: 0; padding: 0 16px; }
+            .search-box input { width: 150px; }
+            .menu-toggle { display: flex; }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="brand-logo">K</div>
+                <span class="brand-name">Kopi</span>
+                <span class="brand-version">1.54</span>
+            </div>
+            <div class="nav-section-title">Panduan</div>
+<a class="nav-item" href="mulai.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Mulai Cepat<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="bahasa.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Bahasa Kopi<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="compiler.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Compiler (kopicc)<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="vm.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Virtual Machine (kopivm)<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="build.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Build System<span class="nav-badge beta">beta</span></a>
+<div class="nav-section-title">Pustaka Inti (lib/)</div>
+<a class="nav-item" href="api/core/Arrays.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>core/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/compress/Compress.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>compress/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/crypto/Crypto.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>crypto/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/data/Json.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>data/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/db/Sqlite.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>db/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/encoding/Base64.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>encoding/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/io/File.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>io/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/net/Http.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>net/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/system/Chan.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>system/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/text/Str.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>text/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/web/Http.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>web/<span class="nav-badge beta">beta</span></a>
+<div class="nav-section-title">Game Engine (lib/game/)</div>
+<a class="nav-item" href="api/game/core/Engine.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>core/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/math/Vec2.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>math/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/render2d/SpriteBatch.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>render/2d/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/render3d/Renderer3D.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>render/3d/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/render_backend/GlesSubmit.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>render/backend/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/animation/AnimationClip.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>animation/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/game/audio/Audio.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>audio/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/game/scene/Scene.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>scene/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/game/physics2d/Body2D.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>physics/2d/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/game/input/InputManager.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>input/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/ui/Widget.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>ui/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/game/util/Fps.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>util/<span class="nav-badge beta">beta</span></a>
+        </nav>
+
+        <!-- Main -->
+        <main class="content">
+            <div class="topbar">
+                <div class="topbar-breadcrumb">
+                    <a href="../../index.html">Dokumentasi</a>
+                    <span class="sep">/</span>
+                    <span class="sep">/</span><a href="../../api.html">API</a><span class="sep">/</span><span class="current">Args</span>
+                </div>
+                <div class="topbar-actions">
+                    <div class="search-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        <input type="text" placeholder="Cari dokumentasi..." id="searchInput">
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-inner">
+                <h1>API: Args</h1>
+                <div class="doc-meta">
+                    <span class="meta-pill version">1.54</span>
+                    <span class="meta-pill category">Args</span>
+                    <span class="meta-pill status">Beta</span>
+                </div>
+                <h2>API Reference: <code>lib/system/Args</code></h2>
+<p>Module: <strong>Args</strong> — Status: <span style="color:#d29922">Beta</span></p>
+<h3 id="args">class Args</h3>
+<p><small>File: <code>system/Args.kop</code></small></p>
+<h4>Fields</h4><div class="table-wrap"><table><thead><tr><th>Modifier</th><th>Type</th><th>Name</th></tr></thead><tbody>
+<tr><td><code></code></td><td><code>int</code></td><td><code>n</code></td></tr>
+<tr><td><code></code></td><td><code>String[]</code></td><td><code>out</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>i</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>out</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>false</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>i</code></td></tr>
+<tr><td><code></code></td><td><code>String</code></td><td><code>a</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>true</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>true</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>false</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>i</code></td></tr>
+<tr><td><code></code></td><td><code>String</code></td><td><code>a</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>def</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>def</code></td></tr>
+<tr><td><code></code></td><td><code>String</code></td><td><code>v</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>def</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>n</code></td></tr>
+<tr><td><code></code></td><td><code>String[]</code></td><td><code>tmp</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>k</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>i</code></td></tr>
+<tr><td><code></code></td><td><code>String</code></td><td><code>a</code></td></tr>
+<tr><td><code></code></td><td><code>String[]</code></td><td><code>out</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>i</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>out</code></td></tr>
+<tr><td><code></code></td><td><code>String[]</code></td><td><code>p</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>n</code></td></tr>
+<tr><td><code></code></td><td><code>String[]</code></td><td><code>tmp</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>k</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>i</code></td></tr>
+<tr><td><code></code></td><td><code>String</code></td><td><code>a</code></td></tr>
+<tr><td><code></code></td><td><code>String[]</code></td><td><code>out</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>i</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>out</code></td></tr>
+</tbody></table></div>
+<h4>Methods</h4>
+<div class="api-sig"><code>static int count()</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>static String at(int i)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>static String[] all()</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>static boolean isFlag(String a)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>static boolean hasFlag(String flag)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>static String value(String flag, String def)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>static int intValue(String flag, int def)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>static String[] positionals()</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>static String command()</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>static String[] flags()</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+                <div class="pagination">
+                     
+                </div>
+            </div>
+        </main>
+
+        <!-- TOC -->
+        <aside class="toc" id="toc">
+            <div class="toc-title">On this page</div>
+            <a href="#args">Args</a>
+        </aside>
+
+        <!-- Mobile menu toggle -->
+        <button class="menu-toggle" id="menuToggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+    </div>
+
+    <script>
+        // Mobile menu
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+            document.addEventListener('click', (e) => {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target))
+                    sidebar.classList.remove('open');
+            });
+        }
+
+        // Copy code buttons
+        document.querySelectorAll('.code-copy').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const pre = btn.closest('.code-block').querySelector('pre');
+                navigator.clipboard.writeText(pre.textContent).then(() => {
+                    btn.classList.add('copied');
+                    btn.querySelector('span').textContent = 'Tersalin';
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.querySelector('span').textContent = 'Salin';
+                    }, 2000);
+                });
+            });
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const group = btn.closest('.tabs');
+                group.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                group.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                group.querySelector(btn.dataset.target).classList.add('active');
+            });
+        });
+
+        // TOC active state
+        const tocLinks = document.querySelectorAll('.toc a');
+        const headings = [];
+        tocLinks.forEach(a => {
+            const id = a.getAttribute('href').slice(1);
+            const h = document.getElementById(id);
+            if (h) headings.push([h, a]);
+        });
+        if (headings.length) {
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        tocLinks.forEach(a => a.classList.remove('active'));
+                        const link = headings.find(([h]) => h === e.target)?.[1];
+                        if (link) link.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-80px 0px -70% 0px' });
+            headings.forEach(([h]) => obs.observe(h));
+        }
+
+        // Search (client-side filter)
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && searchInput.value.trim()) {
+                    // Navigate to search page with query
+                    window.location.href = '../../search.html?q=' + encodeURIComponent(searchInput.value.trim());
+                }
+            });
+        }
+    </script>
+</body>
+</html>

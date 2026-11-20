@@ -1,0 +1,119 @@
+<h2>Build System</h2>
+<p>Kopi menggunakan <code>Makefile</code> sederhana tanpa dependensi eksternal selain <code>cc</code> (clang/gcc), <code>make</code>, dan <code>python3</code> (untuk test/docs).</p>
+
+<h3>Targets Utama</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">sh</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>make            # build kopicc + kopivm (default)
+make test       # jalankan test suite (butuh python3)
+make clean      # hapus build artifacts
+make android-arm64  # build libkopivm.so untuk Android
+make docs       # generate dokumentasi (script ini)</code></pre>
+</div>
+
+<h3>Struktur Build</h3>
+<pre style="background:var(--bg-code);padding:16px;border-radius:8px;overflow-x:auto;font-family:monospace;font-size:12px;line-height:1.7">
+kopi/
+├── src/                    # Compiler (kopicc)
+│   ├── *.c, *.inc, *.h
+│   └── Makefile.inc
+├── vm/                     # VM (kopivm)
+│   ├── *.c, *.inc
+│   └── Makefile.inc
+├── lib/                    # Standard library (.kop)
+├── android/                # Android project (Gradle + JNI)
+├── examples/               # Contoh program
+├── tests/                  # Test suite
+├── tools/                  # Build tools (gen_docs.py, check_docs.py)
+├── kopicc                  # Compiler binary (output)
+├── kopivm                  # VM binary (output)
+└── Makefile                # Entry point
+</pre>
+
+<h3>Compiler Flags</h3>
+<p><code>kopicc</code> dikompilasi dengan:</p>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">makefile</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>CFLAGS = -O2 -std=c11 -Wall -Wextra -Wno-unused-parameter
+                   -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
+                   -I./src -I./vm
+LDFLAGS = -lm -lpthread -ldl</code></pre>
+</div>
+
+<h3>VM Flags</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">makefile</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>VM_CFLAGS = -O2 -std=c11 -Wall -Wextra
+                 -D_GNU_SOURCE -D_POSIX_C_SOURCE=200809L
+                 -I./src -I./vm
+VM_LDFLAGS = -lm -lpthread -ldl -lEGL -lGLESv2 -lOpenSLES -lOpenAL
+             # Android: -landroid -llog -lEGL -lGLESv2 -lOpenSLES</code></pre>
+</div>
+
+<h3>Android Build</h3>
+<p>Gradle project di <code>android/</code> dengan JNI wrapper <code>kopivm_android.c</code>.</p>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">sh</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>cd android
+./gradlew assembleDebug
+# Output: app/build/outputs/apk/debug/app-debug.apk
+
+# Atau build libkopivm.so manual
+cd ~/kopi
+make android-arm64
+# Output: vm-android/libkopivm.so</code></pre>
+</div>
+
+<h3>Cross-compile x86-64 di ARM</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">sh</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code># Check syntax x64 assembly tanpa run
+./kopicc hello.kop -t x64 -o hello64.s
+cc -target x86_64-linux-gnu -c hello64.s -o /dev/null
+
+# Full cross-compile (butuh toolchain x86_64-linux-gnu)
+cc -target x86_64-linux-gnu hello64.s -o hello64</code></pre>
+</div>
+
+<h3>Continuous Integration</h3>
+<p>GitHub Actions workflow (contoh):</p>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">yaml</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install -y clang make python3
+      - name: Build
+        run: make
+      - name: Test
+        run: make test
+      - name: Build Android
+        run: make android-arm64</code></pre>
+</div>
+
+<h3>Project Structure Best Practices</h3>
+<pre style="background:var(--bg-code);padding:16px;border-radius:8px;overflow-x:auto;font-family:monospace;font-size:12px;line-height:1.7">
+my-kopi-game/
+├── src/
+│   ├── Main.kop
+│   ├── World.kop
+│   ├── Player.kop
+│   └── Defs.kop
+├── assets/
+│   ├── tex/
+│   ├── kpak/
+│   └── world_manifest.json
+├── build/                 # output (gitignore)
+│   ├── game.kbc
+│   └── sim*.ppm
+├── tools/                 # custom build tools
+└── Makefile               # atau build.sh
+
+# Build command
+kopicc src/*.kop -t vm -o build/game.kbc
+</pre>

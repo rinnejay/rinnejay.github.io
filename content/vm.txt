@@ -1,0 +1,219 @@
+<h2>kopivm — Virtual Machine KOP1</h2>
+<p>Interpreter register-based untuk bytecode KOP1 v1. Mendukung JIT aarch64, builtin <code>Net.*</code> (socket, GL, audio, thread, channel, asset), dan GC arena-based.</p>
+
+<h3>Usage</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">sh</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>kopivm <file.kbc> [args...]
+
+# Environment variables
+KOPISIM=1           # enable PPM snapshot (frame 3, 15, 30, 45)
+MAXFRAME=60         # max frame untuk KOPISIM
+KOPI_NOJIT=1        # disable JIT (debug)</code></pre>
+</div>
+
+<h3>Architecture</h3>
+<div class="card-grid">
+  <div class="card">
+    <div class="card-title">Register-based Interpreter</div>
+    <div class="card-desc">Operand stack + local slots per frame. Instruksi 1-byte opcode + operand inline.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Per-thread State</div>
+    <div class="card-desc">Setiap thread (main + threadspawn) punya VState sendiri: stack, frames, locals, heap arena.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Arena Allocator</div>
+    <div class="card-desc">Bump-pointer arena per thread (32 MB default). <code>malloc{}</code> = mmap 4 TB virtual (MAP_NORESERVE).</div>
+  </div>
+  <div class="card">
+    <div class="card-title">JIT aarch64</div>
+    <div class="card-desc">Hot loop detection -> compile ke native ARM64. <code>KOPI_NOJIT=1</code> untuk disable.</div>
+  </div>
+</div>
+
+<h3>Bytecode Instruction Set (Ringkasan)</h3>
+<div class="table-wrap"><table><thead><tr><th>Opcode</th><th>Mnemonic</th><th>Operands</th><th>Description</th></tr></thead><tbody>
+<tr><td>0</td><td>OP_HALT</td><td>—</td><td>Hentikan VM, return value di stack[0]</td></tr>
+<tr><td>1</td><td>OP_ICONST</td><td>int32</td><td>Push constant int</td></tr>
+<tr><td>2</td><td>OP_ILOAD</td><td>local_idx</td><td>Load local -> stack</td></tr>
+<tr><td>3</td><td>OP_ISTORE</td><td>local_idx</td><td>Pop stack -> local</td></tr>
+<tr><td>4</td><td>OP_POP</td><td>—</td><td>Discard top of stack</td></tr>
+<tr><td>5-10</td><td>OP_ADD..OP_MOD</td><td>—</td><td>Arithmetic int32</td></tr>
+<tr><td>11</td><td>OP_NEG</td><td>—</td><td>Negate int</td></tr>
+<tr><td>12</td><td>OP_NOT</td><td>—</td><td>Logical not</td></tr>
+<tr><td>13-18</td><td>OP_LT..OP_NE</td><td>—</td><td>Compare int -> push 0/1</td></tr>
+<tr><td>19</td><td>OP_JMP</td><td>offset</td><td>Unconditional jump</td></tr>
+<tr><td>20</td><td>OP_JMPF</td><td>offset</td><td>Jump if false (top==0)</td></tr>
+<tr><td>21</td><td>OP_JMPT</td><td>offset</td><td>Jump if true (top!=0)</td></tr>
+<tr><td>22</td><td>OP_CALL</td><td>meth_idx</td><td>Call static method</td></tr>
+<tr><td>23</td><td>OP_RET</td><td>—</td><td>Return from method</td></tr>
+<tr><td>24-25</td><td>OP_PRINTILN/OP_PRINTSLN</td><td>—</td><td>Print int/string + newline</td></tr>
+<tr><td>26</td><td>OP_NEWCLO</td><td>meth_idx</td><td>Create closure</td></tr>
+<tr><td>27</td><td>OP_CALLIND</td><td>—</td><td>Call closure (stack: clo, args...)</td></tr>
+<tr><td>28</td><td>OP_ENVLOAD</td><td>env_idx</td><td>Load captured var</td></tr>
+<tr><td>29</td><td>OP_IDXR</td><td>—</td><td>Array read (arr, idx -> val)</td></tr>
+<tr><td>30</td><td>OP_IDXW</td><td>—</td><td>Array write (arr, idx, val)</td></tr>
+<tr><td>31</td><td>OP_ALEN</td><td>—</td><td>Array length</td></tr>
+<tr><td>32</td><td>OP_NEWARR</td><td>type_tag</td><td>New array (type: 0=int, 1=float, 2=String, 3=long, 4=byte)</td></tr>
+<tr><td>33</td><td>OP_NET</td><td>builtin_idx</td><td>Builtin Net.* (syscall)</td></tr>
+<tr><td>34-39</td><td>OP_BAND..OP_BNOT</td><td>—</td><td>Bitwise int32</td></tr>
+<tr><td>40-60</td><td>OP_ICONST64..OP_NE64</td><td>—</td><td>Int64 arithmetic/compare</td></tr>
+<tr><td>61-67</td><td>OP_FADD..OP_FNE</td><td>—</td><td>Float32 arithmetic/compare</td></tr>
+<tr><td>68</td><td>OP_CONV</td><td>from,to</td><td>Type conversion</td></tr>
+<tr><td>69</td><td>OP_NORM</td><td>type</td><td>Normalize packed array</td></tr>
+<tr><td>70</td><td>OP_PRINTNUM</td><td>type,nl</td><td>Print any number type</td></tr>
+<tr><td>71</td><td>OP_PRINTBUF</td><td>nl</td><td>Print byte array</td></tr>
+<tr><td>72</td><td>OP_LINE</td><td>line_no</td><td>Source line (stack trace)</td></tr>
+<tr><td>73</td><td>OP_SRCFILE</td><td>file_idx</td><td>Source file (stack trace)</td></tr>
+<tr><td>74</td><td>OP_IDXB</td><td>—</td><td>String byte access</td></tr>
+<tr><td>75</td><td>OP_PRINTSTR</td><td>nl</td><td>Print packed String</td></tr>
+<tr><td>76</td><td>OP_MARK</td><td>—</td><td>Push arena mark</td></tr>
+<tr><td>77</td><td>OP_MRESET</td><td>—</td><td>Reset to mark</td></tr>
+<tr><td>78</td><td>OP_RENTER</td><td>size</td><td>Enter malloc<size> block</td></tr>
+<tr><td>79</td><td>OP_RLEAVE</td><td>—</td><td>Leave malloc block</td></tr>
+<tr><td>80-85</td><td>OP_CMP_JMPT..OP_LOOP_R</td><td>—</td><td>Loop superinstructions</td></tr>
+<tr><td>86</td><td>OP_MULADD</td><td>—</td><td>slot = slot*c + k</td></tr>
+<tr><td>87</td><td>OP_ADDSHR</td><td>—</td><td>slotX += slotY >>> shift</td></tr>
+<tr><td>88-91</td><td>OP_NEWARR_B..OP_IDXW_B</td><td>—</td><td>Packed byte array ops</td></tr>
+<tr><td>92</td><td>OP_TRYENTER</td><td>catch_pc</td><td>Enter try block</td></tr>
+<tr><td>93</td><td>OP_TRYLEAVE</td><td>—</td><td>Leave try block</td></tr>
+<tr><td>94</td><td>OP_THROW</td><td>—</td><td>Throw exception</td></tr>
+</tbody></table></div>
+
+<h3>Builtin Net.* Dispatch Table</h3>
+<p>Opcode <code>OP_NET (33)</code> dengan index <code>bi</code> (0-145). Lihat <a href="bahasa.html#builtin-net-system-calls">Bahasa Kopi</a> untuk daftar lengkap.</p>
+
+<h3>Thread Model</h3>
+<ul>
+  <li>Thread utama: ID 1, <code>VState</code> statis di <code>run()</code></li>
+  <li><code>Net.threadspawn(() => { ... })</code> -> spawn pthread, <code>VState</code> baru per thread</li>
+  <li>Heap arena thread <strong>tidak dibebaskan</strong> saat thread selesai (objek bisa dibagikan)</li>
+  <li><code>threadjoin</code> = <code>pthread_join</code> + sinkronisasi memori</li>
+  <li>Maks 8192 thread bersamaan (slot handle)</li>
+</ul>
+
+<h3>Channel CSP</h3>
+<ul>
+  <li>Buffer melingkar + condvar (<code>pthread_cond_t</code>)</li>
+  <li>Payload <code>long</code> (64-bit) — gunakan untuk pointer/handle</li>
+  <li>Varian <code>fn</code> untuk closure executor pattern</li>
+  <li><code>chanclose</code> membangunkan semua penunggu</li>
+</ul>
+
+<h3>Graphics Pipeline (Net.gl* / Net.vk*)</h3>
+<p>Backend GPU native di VM — tidak butuh Java/JNI. Dua backend:</p>
+
+<div class="tabs">
+  <div class="tab-list">
+    <button class="tab-btn active" data-target="#gfx-gl">OpenGL ES</button>
+    <button class="tab-btn" data-target="#gfx-vk">Vulkan</button>
+  </div>
+  <div class="tab-pane active" id="gfx-gl">
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>int r = Net.glInit(surface, 1280, 720);  // surface = ANativeWindow* (Android) atau 0
+if (r != 1) die("GL init failed");
+
+Net.glSetViewport(0, 0, 1280, 720);
+
+// Shader (packed string array: tiap char = 1 slot)
+int prog = Net.glCreateProgram(vert_src, frag_src);
+
+// Buffer
+int vbuf = Net.glCreateBuffer(1, vertex_count * 8, vertex_data);  // kind=1 vertex
+int ibuf = Net.glCreateIndexBuffer(index_count, index_data);
+
+// Texture
+int tex = Net.glCreateTexture(w, h, 0, rgba_data);  // fmt=0 RGBA8
+
+// Draw loop
+Net.glClear(0x8CA8C0FF);
+Net.glBindTexture(tex);
+Net.glDrawIndexed(prog, vbuf, ibuf, index_count, 1, 0, 0, 0);
+Net.glPresent();</code></pre>
+</div>
+  </div>
+  <div class="tab-pane" id="gfx-vk">
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>int r = Net.vkInit(surface, 1280, 720);
+int pipeline = Net.vkCreatePipeline(vert_spv, frag_spv, layout);
+int vbuf = Net.vkCreateBuffer(1, count, vertex_data);
+int ibuf = Net.vkCreateIndexBuffer(count, index_data);
+int tex = Net.vkCreateTexture(w, h, 0, rgba_data);
+
+Net.vkSetViewport(0, 0, 1280, 720);
+Net.vkClear(0x8CA8C0FF);
+Net.vkDrawIndexed(pipeline, vbuf, ibuf, count, 1, 0, 0, 0);
+Net.vkPresent();</code></pre>
+</div>
+  </div>
+</div>
+
+<h3>Audio (Net.audio*)</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>Net.audioInit(1);  // 1 = OpenAL
+
+int buf = Net.audioCreateBuffer(2, 44100, pcm_data);  // stereo
+int src = Net.audioPlay(buf, 1.0f, 1.0f, 0);  // vol, pitch, loop
+Net.audioSetListener(0,0,0,  0,0,-1);       // pos, forward
+Net.audioSetSourcePos(src, 5, 0, 0);        // pos sumber
+Net.audioStop(src);
+Net.audioShutdown();</code></pre>
+</div>
+
+<h3>Input Injection</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">kopi</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>// Touch (action: 0=down, 1=move, 2=up)
+Net.injectTouch(0, 0, 100.0f, 200.0f, timestamp_ms);
+
+// Key
+Net.injectKey(keycode, action);  // action: 0=down, 1=up
+
+// Gamepad
+Net.injectGamepad(device_id, button, value);  // value: 0.0..1.0 atau -1.0..1.0</code></pre>
+</div>
+
+<h3>Memory & GC</h3>
+<ul>
+  <li>Global arena: 32 MB (<code>HEAPLEN = 1<<22</code> slots)</li>
+  <li><code>malloc<N> { ... }</code> — arena eksplisit N bytes</li>
+  <li><code>malloc { ... }</code> — arena otomatis 4 TB virtual (MAP_NORESERVE)</li>
+  <li>Thread heap didaftarkan ke registry global untuk cross-thread ref safety</li>
+  <li>Tidak ada GC tracing — arena-based, manual scope via <code>malloc</code></li>
+</ul>
+
+<h3>Profiling & Debug</h3>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">sh</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code># KOPISIM: snapshot PPM setiap frame tertentu
+KOPISIM=1 MAXFRAME=60 ./kopivm game.kbc
+# Output: build/sim1.ppm, sim2.ppm, ...
+
+# Convert PPM ke PNG
+python3 tools/ppm2png.py build/sim1.ppm build/frame1.png
+
+# Heap usage
+System.out.println("Heap: " + Net.heapUsed() + " slots");</code></pre>
+</div>
+
+<h3>Android Integration (libkopivm.so)</h3>
+<p>API JNI di <code>kopivm_android.c</code>:</p>
+<div class="code-block">
+  <div class="code-header"><span class="code-lang">c</span><button class="code-copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Salin</span></button></div>
+  <pre><code>// Load bytecode dari memory (asset)
+kopivm_android_load_mem(kbc_data, kbc_len);
+
+// Atau dari file
+kopivm_android_load_file("/data/data/pkg/files/game.kbc");
+
+// Run frame (dipanggil tiap frame dari Java/JNI)
+long ret = kopivm_android_run();
+
+// Stats
+long heap_used = kopivm_android_heap_used();
+int thread_count = kopivm_android_thread_count();</code></pre>
+</div>
