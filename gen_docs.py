@@ -166,12 +166,12 @@ make            # build kopicc & kopivm
 ./kopivm hello.kbc""", "sh") + """
 <h2>Arsitektur Singkat</h2>
 <div class="card-grid">
-  <a class="card" href="bahasa.html"><div class="card-icon" style="background:rgba(88,166,255,0.15);color:#58a6ff">&#128221;</div><div class="card-title">Bahasa</div><div class="card-desc">Sintaks mirip Java/C#, tipe statis, inferensi lokal, closure, generik, pattern matching.</div></a>
-  <a class="card" href="compiler.html"><div class="card-icon" style="background:rgba(188,140,255,0.15);color:#bc8cff">&#9881;</div><div class="card-title">Compiler (kopicc)</div><div class="card-desc">Target a64 (ARM), x64 (PC), vm (bytecode KOP1). Output assembly atau .kbc.</div></a>
-  <a class="card" href="vm.html"><div class="card-icon" style="background:rgba(63,185,80,0.15);color:#3fb950">&#128471;</div><div class="card-title">Virtual Machine</div><div class="card-desc">Interpreter register-based, JIT aarch64, builtin Net.* (socket, GL, audio, thread, channel).</div></a>
+  <a class="card" href="bahasa_kopi.html"><div class="card-icon" style="background:rgba(88,166,255,0.15);color:#58a6ff">&#128221;</div><div class="card-title">Bahasa</div><div class="card-desc">Sintaks mirip Java/C#, tipe statis, inferensi lokal, closure, generik, pattern matching.</div></a>
+  <a class="card" href="compiler_kopicc.html"><div class="card-icon" style="background:rgba(188,140,255,0.15);color:#bc8cff">&#9881;</div><div class="card-title">Compiler (kopicc)</div><div class="card-desc">Target a64 (ARM), x64 (PC), vm (bytecode KOP1). Output assembly atau .kbc.</div></a>
+  <a class="card" href="virtual_machine_kopivm.html"><div class="card-icon" style="background:rgba(63,185,80,0.15);color:#3fb950">&#128471;</div><div class="card-title">Virtual Machine</div><div class="card-desc">Interpreter register-based, JIT aarch64, builtin Net.* (socket, GL, audio, thread, channel).</div></a>
   <a class="card" href="api/core/Arrays.html"><div class="card-icon" style="background:rgba(255,166,87,0.15);color:#ffa657">&#128187;</div><div class="card-title">Pustaka Inti</div><div class="card-desc">core, compress, crypto, data, db, encoding, io, net, system, text, web.</div></a>
   <a class="card" href="api/game/core/Engine.html"><div class="card-icon" style="background:rgba(255,109,96,0.15);color:#f85149">&#127918;</div><div class="card-title">Game Engine</div><div class="card-desc">ECS, render 2D/3D, physics, audio, UI, scene graph, animation, input, networking.</div></a>
-  <a class="card" href="android.html"><div class="card-icon" style="background:rgba(160,210,100,0.15);color:#7ee787">&#128241;</div><div class="card-title">Android</div><div class="card-desc">libkopivm.so + JNI, AAssetManager, OpenSL/OpenAL, Vulkan/GLES.</div></a>
+  <a class="card" href="android_integration.html"><div class="card-icon" style="background:rgba(160,210,100,0.15);color:#7ee787">&#128241;</div><div class="card-title">Android</div><div class="card-desc">libkopivm.so + JNI, AAssetManager, OpenSL/OpenAL, Vulkan/GLES.</div></a>
 </div>
 <h2>Versi & Status</h2>
 <div class="table-wrap"><table><thead><tr><th>Komponen</th><th>Versi</th><th>Status</th><th>Catatan</th></tr></thead><tbody>
@@ -185,7 +185,7 @@ make            # build kopicc & kopivm
 <tr><td>lib/crypto</td><td>1.54</td><td><span style="color:#d29922">Beta</span></td><td>AES-GCM, ChaCha20-Poly1305, Ascon, BLAKE2b</td></tr>
 </tbody></table></div>"""
     page("Dokumentasi Kopi", "Home", "Stable", "", content,
-         next_link='<a class="page-link next" href="mulai.html"><span class="page-label">Next</span><span class="page-title">Mulai Cepat &rarr;</span></a>')
+         next_link='<a class="page-link next" href="mulai_cepat.html"><span class="page-label">Next</span><span class="page-title">Mulai Cepat &rarr;</span></a>')
 
 def gen_mulai():
     global CURRENT_URL
@@ -297,62 +297,62 @@ source .kop
          '<span class="sep">/</span><span class="current">Mulai Cepat</span>',
          content,
          '<a class="page-link" href="index.html"><span class="page-label">Previous</span><span class="page-title">&larr; Dokumentasi</span></a>',
-         '<a class="page-link next" href="bahasa.html"><span class="page-label">Next</span><span class="page-title">Bahasa Kopi &rarr;</span></a>',
+         '<a class="page-link next" href="bahasa_kopi.html"><span class="page-label">Next</span><span class="page-title">Bahasa Kopi &rarr;</span></a>',
          "<a href=\"#1-persiapan\">1. Persiapan</a><a href=\"#2-verifikasi-build\">2. Verifikasi Build</a><a href=\"#3-program-pertama\">3. Program Pertama</a><a href=\"#4-multi-file-project\">4. Multi-file Project</a><a href=\"#5-import-library\">5. Import Library</a><a href=\"#6-argumen-program\">6. Argumen Program</a><a href=\"#7-alur-kerja-ringkas\">7. Alur Kerja Ringkas</a><a href=\"#8-kesalahan-umum\">8. Kesalahan Umum</a>")
 
 # Stub implementations for other pages
 def gen_bahasa():
     global CURRENT_URL
-    CURRENT_URL = "bahasa.html"
+    CURRENT_URL = "bahasa_kopi.html"
     content = load_content("bahasa") or "<p>Bahasa Kopi reference page. Content to be expanded.</p>"
     page("Bahasa Kopi", "Panduan", "Stable",
          '<span class="sep">/</span><span class="current">Bahasa Kopi</span>',
          content,
-         '<a class="page-link" href="mulai.html"><span class="page-label">Previous</span><span class="page-title">&larr; Mulai Cepat</span></a>',
-         '<a class="page-link next" href="compiler.html"><span class="page-label">Next</span><span class="page-title">Compiler (kopicc) &rarr;</span></a>',
+         '<a class="page-link" href="mulai_cepat.html"><span class="page-label">Previous</span><span class="page-title">&larr; Mulai Cepat</span></a>',
+         '<a class="page-link next" href="compiler_kopicc.html"><span class="page-label">Next</span><span class="page-title">Compiler (kopicc) &rarr;</span></a>',
          "")
 
 def gen_compiler():
     global CURRENT_URL
-    CURRENT_URL = "compiler.html"
+    CURRENT_URL = "compiler_kopicc.html"
     content = load_content("compiler") or "<p>Compiler reference page. Content to be expanded.</p>"
     page("Compiler (kopicc)", "Panduan", "Stable",
          '<span class="sep">/</span><span class="current">Compiler</span>',
          content,
-         '<a class="page-link" href="bahasa.html"><span class="page-label">Previous</span><span class="page-title">&larr; Bahasa Kopi</span></a>',
-         '<a class="page-link next" href="vm.html"><span class="page-label">Next</span><span class="page-title">Virtual Machine &rarr;</span></a>',
+         '<a class="page-link" href="bahasa_kopi.html"><span class="page-label">Previous</span><span class="page-title">&larr; Bahasa Kopi</span></a>',
+         '<a class="page-link next" href="virtual_machine_kopivm.html"><span class="page-label">Next</span><span class="page-title">Virtual Machine &rarr;</span></a>',
          "")
 
 def gen_vm():
     global CURRENT_URL
-    CURRENT_URL = "vm.html"
+    CURRENT_URL = "virtual_machine_kopivm.html"
     content = load_content("vm") or "<p>VM reference page. Content to be expanded.</p>"
     page("Virtual Machine (kopivm)", "Panduan", "Stable",
          '<span class="sep">/</span><span class="current">Virtual Machine</span>',
          content,
-         '<a class="page-link" href="compiler.html"><span class="page-label">Previous</span><span class="page-title">&larr; Compiler</span></a>',
-         '<a class="page-link next" href="build.html"><span class="page-label">Next</span><span class="page-title">Build System &rarr;</span></a>',
+         '<a class="page-link" href="compiler_kopicc.html"><span class="page-label">Previous</span><span class="page-title">&larr; Compiler</span></a>',
+         '<a class="page-link next" href="build_system.html"><span class="page-label">Next</span><span class="page-title">Build System &rarr;</span></a>',
          "")
 
 def gen_build():
     global CURRENT_URL
-    CURRENT_URL = "build.html"
+    CURRENT_URL = "build_system.html"
     content = load_content("build") or "<p>Build system reference page. Content to be expanded.</p>"
     page("Build System", "Panduan", "Beta",
          '<span class="sep">/</span><span class="current">Build System</span>',
          content,
-         '<a class="page-link" href="vm.html"><span class="page-label">Previous</span><span class="page-title">&larr; Virtual Machine</span></a>',
-         '<a class="page-link next" href="android.html"><span class="page-label">Next</span><span class="page-title">Android &rarr;</span></a>',
+         '<a class="page-link" href="virtual_machine_kopivm.html"><span class="page-label">Previous</span><span class="page-title">&larr; Virtual Machine</span></a>',
+         '<a class="page-link next" href="android_integration.html"><span class="page-label">Next</span><span class="page-title">Android &rarr;</span></a>',
          "")
 
 def gen_android():
     global CURRENT_URL
-    CURRENT_URL = "android.html"
+    CURRENT_URL = "android_integration.html"
     content = load_content("android") or "<p>Android integration page. Content to be expanded.</p>"
     page("Android Integration", "Platform", "Stable",
          '<span class="sep">/</span><span class="current">Android</span>',
          content,
-         '<a class="page-link" href="build.html"><span class="page-label">Previous</span><span class="page-title">&larr; Build System</span></a>',
+         '<a class="page-link" href="build_system.html"><span class="page-label">Previous</span><span class="page-title">&larr; Build System</span></a>',
          '',
          "")
 
