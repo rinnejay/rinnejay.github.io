@@ -135,11 +135,11 @@ def build_nav():
             parts.append(f'<a class="nav-item{active}" href="{url}"><span class="nav-icon">{ICON_MAP.get(section_icon, ICON_MAP["package"])}</span>{title}<span class="nav-badge {status}">{status}</span></a>')
     return "\n".join(parts)
 
-def page(title, category, status, breadcrumb, content, prev="", next_link="", toc=""):
+def page(title, category, status, breadcrumb, content, prev="", next_link="", toc="", css_path=""):
     html = render(tpl(),
         TITLE=title, VERSION=VERSION, CATEGORY=category, STATUS=status,
         ROOT="../", BREADCRUMB=breadcrumb, CONTENT=content,
-        PREV=prev, NEXT=next_link, NAV=build_nav(), TOC=toc
+        PREV=prev, NEXT=next_link, NAV=build_nav(), TOC=toc, CSS_PATH=css_path
     )
     fname = title.lower().replace(" ", "_").replace("(", "").replace(")", "").replace("/", "_") + ".html"
     (OUT / fname).write_text(html, encoding="utf-8")
@@ -185,7 +185,9 @@ make            # build kopicc & kopivm
 <tr><td>lib/crypto</td><td>1.54</td><td><span style="color:#d29922">Beta</span></td><td>AES-GCM, ChaCha20-Poly1305, Ascon, BLAKE2b</td></tr>
 </tbody></table></div>"""
     page("Dokumentasi Kopi", "Home", "Stable", "", content,
-         next_link='<a class="page-link next" href="mulai_cepat.html"><span class="page-label">Next</span><span class="page-title">Mulai Cepat &rarr;</span></a>')
+         '<a class="page-link" href="index.html"><span class="page-label">Previous</span><span class="page-title">&larr; Dokumentasi</span></a>',
+         '<a class="page-link next" href="mulai_cepat.html"><span class="page-label">Next</span><span class="page-title">Mulai Cepat &rarr;</span></a>',
+         "", "")
 
 def gen_mulai():
     global CURRENT_URL
@@ -298,7 +300,7 @@ source .kop
          content,
          '<a class="page-link" href="index.html"><span class="page-label">Previous</span><span class="page-title">&larr; Dokumentasi</span></a>',
          '<a class="page-link next" href="bahasa_kopi.html"><span class="page-label">Next</span><span class="page-title">Bahasa Kopi &rarr;</span></a>',
-         "<a href=\"#1-persiapan\">1. Persiapan</a><a href=\"#2-verifikasi-build\">2. Verifikasi Build</a><a href=\"#3-program-pertama\">3. Program Pertama</a><a href=\"#4-multi-file-project\">4. Multi-file Project</a><a href=\"#5-import-library\">5. Import Library</a><a href=\"#6-argumen-program\">6. Argumen Program</a><a href=\"#7-alur-kerja-ringkas\">7. Alur Kerja Ringkas</a><a href=\"#8-kesalahan-umum\">8. Kesalahan Umum</a>")
+         '', css_path="")
 
 # Stub implementations for other pages
 def gen_bahasa():
@@ -310,7 +312,7 @@ def gen_bahasa():
          content,
          '<a class="page-link" href="mulai_cepat.html"><span class="page-label">Previous</span><span class="page-title">&larr; Mulai Cepat</span></a>',
          '<a class="page-link next" href="compiler_kopicc.html"><span class="page-label">Next</span><span class="page-title">Compiler (kopicc) &rarr;</span></a>',
-         "")
+         "", "")
 
 def gen_compiler():
     global CURRENT_URL
@@ -321,7 +323,7 @@ def gen_compiler():
          content,
          '<a class="page-link" href="bahasa_kopi.html"><span class="page-label">Previous</span><span class="page-title">&larr; Bahasa Kopi</span></a>',
          '<a class="page-link next" href="virtual_machine_kopivm.html"><span class="page-label">Next</span><span class="page-title">Virtual Machine &rarr;</span></a>',
-         "")
+         "", "")
 
 def gen_vm():
     global CURRENT_URL
@@ -332,7 +334,7 @@ def gen_vm():
          content,
          '<a class="page-link" href="compiler_kopicc.html"><span class="page-label">Previous</span><span class="page-title">&larr; Compiler</span></a>',
          '<a class="page-link next" href="build_system.html"><span class="page-label">Next</span><span class="page-title">Build System &rarr;</span></a>',
-         "")
+         "", "")
 
 def gen_build():
     global CURRENT_URL
@@ -343,7 +345,7 @@ def gen_build():
          content,
          '<a class="page-link" href="virtual_machine_kopivm.html"><span class="page-label">Previous</span><span class="page-title">&larr; Virtual Machine</span></a>',
          '<a class="page-link next" href="android_integration.html"><span class="page-label">Next</span><span class="page-title">Android &rarr;</span></a>',
-         "")
+         "", "")
 
 def gen_android():
     global CURRENT_URL
@@ -354,7 +356,7 @@ def gen_android():
          content,
          '<a class="page-link" href="build_system.html"><span class="page-label">Previous</span><span class="page-title">&larr; Build System</span></a>',
          '',
-         "")
+         "", "")
 
 # ==================== API GENERATION ====================
 
@@ -417,7 +419,7 @@ def gen_api_page(module_name: str, classes: dict):
     breadcrumb = f'<span class="sep">/</span><a href="../../api.html">API</a><span class="sep">/</span><span class="current">{cat_name}</span>'
     html = render(tpl(), TITLE=f"API: {cat_name}", VERSION=VERSION, CATEGORY=cat_name, STATUS=status,
         ROOT="../../", BREADCRUMB=breadcrumb, CONTENT=content, PREV='', NEXT='',
-        NAV=build_nav(), TOC=toc)
+        NAV=build_nav(), TOC=toc, CSS_PATH="../")
     out_path = OUT / "api" / f"{module_name.replace('.', '_')}.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(html, encoding="utf-8")
@@ -446,7 +448,7 @@ def gen_all_api():
     content += '</div>'
     html = render(tpl(), TITLE="API Reference", VERSION=VERSION, CATEGORY="Reference", STATUS="Stable",
         ROOT="../", BREADCRUMB='<span class="current">API Reference</span>',
-        CONTENT=content, PREV='', NEXT='', NAV=build_nav(), TOC="")
+        CONTENT=content, PREV='', NEXT='', NAV=build_nav(), TOC="", CSS_PATH="")
     (OUT / "api.html").write_text(html, encoding="utf-8")
     print("Generated api.html")
 
