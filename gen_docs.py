@@ -83,11 +83,11 @@ def cblock(code: str, lang: str = "kopi") -> str:
 
 NAV_ITEMS = [
     ("Panduan", "index.html", "home", [
-        ("Mulai Cepat", "mulai.html", "stable"),
-        ("Bahasa Kopi", "bahasa.html", "stable"),
-        ("Compiler (kopicc)", "compiler.html", "stable"),
-        ("Virtual Machine (kopivm)", "vm.html", "stable"),
-        ("Build System", "build.html", "beta"),
+        ("Mulai Cepat", "mulai_cepat.html", "stable"),
+        ("Bahasa Kopi", "bahasa_kopi.html", "stable"),
+        ("Compiler (kopicc)", "compiler_kopicc.html", "stable"),
+        ("Virtual Machine (kopivm)", "virtual_machine_kopivm.html", "stable"),
+        ("Build System", "build_system.html", "beta"),
     ]),
     ("Pustaka Inti (lib/)", "api/core/Arrays.html", "package", [
         ("core/", "api/core/Arrays.html", "stable"),
