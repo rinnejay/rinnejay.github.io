@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API: Render — Dokumentasi Kopi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../../../../assets/style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="brand-logo">K</div>
+                <span class="brand-name">Kopi</span>
+                <span class="brand-version">1.54</span>
+            </div>
+            <div class="nav-section-title">Panduan</div>
+<a class="nav-item" href="../../../../mulai_cepat.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Mulai Cepat<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../bahasa_kopi.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Bahasa Kopi<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../compiler_kopicc.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Compiler (kopicc)<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../virtual_machine_kopivm.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Virtual Machine (kopivm)<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../build_system.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Build System<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="../../../../gtasa_kopi.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>GTA SA Kopi (Android)<span class="nav-badge stable">stable</span></a>
+<div class="nav-section-title">Pustaka Inti (lib/)</div>
+<a class="nav-item" href="../../../../api/core/Arrays.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>core/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../api/compress/Compress.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>compress/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="../../../../api/crypto/Crypto.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>crypto/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="../../../../api/data/Json.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>data/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../api/db/Sqlite.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>db/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="../../../../api/encoding/Base64.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>encoding/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../api/io/File.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>io/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../api/net/Tcp.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>net/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="../../../../api/system/Chan.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>system/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../api/text/Str.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>text/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../api/web/Http.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>web/<span class="nav-badge beta">beta</span></a>
+<div class="nav-section-title">Game Engine (lib/game/)</div>
+<a class="nav-item" href="../../../../api/game/core/Engine.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>core/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../api/game/math/Vec2.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>math/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../api/game/render/2d/SpriteBatch.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>render/2d/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item active" href="../../../../api/game/render/3d/Renderer3D.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>render/3d/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../api/game/render/backend/GlesSubmit.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>render/backend/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../api/game/animation/AnimationClip.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>animation/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="../../../../api/game/audio/Audio.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>audio/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="../../../../api/game/scene/Scene.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>scene/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="../../../../api/game/physics/2d/Body2D.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>physics/2d/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="../../../../api/game/input/InputManager.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>input/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="../../../../api/game/ui/Widget.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>ui/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="../../../../api/game/util/Fps.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>util/<span class="nav-badge beta">beta</span></a>
+        </nav>
+
+        <!-- Main -->
+        <main class="content">
+            <div class="topbar">
+                <div class="topbar-breadcrumb">
+                    <a href="../../../../index.html">Dokumentasi</a>
+                    <span class="sep">/</span>
+                    <span class="sep">/</span><a href="../../../../api.html">API</a><span class="sep">/</span><span class="current">Render</span>
+                </div>
+                <div class="topbar-actions">
+                    <div class="search-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        <input type="text" placeholder="Cari dokumentasi..." id="searchInput">
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-inner">
+                <h1>API: Render</h1>
+                <div class="doc-meta">
+                    <span class="meta-pill version">1.54</span>
+                    <span class="meta-pill category">Render</span>
+                    <span class="meta-pill status">Beta</span>
+                </div>
+                <h2>API Reference: <code>lib/game/render/3d/Renderer3D</code></h2>
+<p>Module: <strong>Render</strong> — Status: <span style="color:#d29922">Beta</span></p>
+<h3 id="renderer3d">class Renderer3D</h3>
+<p><small>File: <code>game/render/3d/Renderer3D.kop</code></small></p>
+<h4>Fields</h4><div class="table-wrap"><table><thead><tr><th>Modifier</th><th>Type</th><th>Name</th></tr></thead><tbody>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>wx</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>wy</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>wz</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>sx</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>sy</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>sz</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cX</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cY</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cZ</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cW</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>vis</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>scratchCap</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>scratchFCap</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fDepth</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fOrder</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fNx</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fNy</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fNz</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fCol</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fClipP</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fClipN</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>perm</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>bTmp</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>cnt</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>zPass</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>bucketOn</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fList</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>vStamp</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>stamp</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolX</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolY</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolU</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolV</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>poolN</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>poolCap</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clX</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clY</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clZ</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clW</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clU</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clV</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clSX</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clSY</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clSZ</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>clCount</code></td></tr>
+<tr><td><code></code></td><td><code>long</code></td><td><code>dbgA</code></td></tr>
+<tr><td><code></code></td><td><code>long</code></td><td><code>dbgB</code></td></tr>
+<tr><td><code></code></td><td><code>long</code></td><td><code>dbgC</code></td></tr>
+<tr><td><code></code></td><td><code>long</code></td><td><code>dbgE</code></td></tr>
+<tr><td><code></code></td><td><code>long</code></td><td><code>dbgT</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>stCalls</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>stFaces</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>stDrawn</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>stCulled</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>stRejMesh</code></td></tr>
+<tr><td><code></code></td><td><code>long</code></td><td><code>stMs</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>c16S</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>prS</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>lightX</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>lightY</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>lightZ</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>facesDrawn</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>facesCulled</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullX</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullZ</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullR2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>specStrength</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>specPower</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>envRefl</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>flat</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>envOut</code></td></tr>
+<tr><td><code></code></td><td><code>pass</code></td><td><code>cermin</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>tintR</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>tintG</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>tintB</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullY</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>cullFlip</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>twoSided</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>rigid</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>nsc</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>specRefD</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>specRefR</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>specHalf</code></td></tr>
+<tr><td><code></code></td><td><code>pangkat</code></td><td><code>genap</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>bandY0</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>bandY1</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>bandOn</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>fogStart</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>fogEnd</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>fogStart2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>fogEnd2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>fogInv</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fogR</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fogG</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fogB</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>l</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>span</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>rr</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>d2</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>color</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>a</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>f</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>r8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>g8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>r2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>g2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>skyR</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>skyG</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>skyB</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>t</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>t</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>sa</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>halo</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>disc</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>w</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>sun</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>v</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>v</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>vx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>vy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>vz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>vl</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>lx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ly</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>lz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>albR</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>albG</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>albB</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ndl</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hemi</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ambR</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ambG</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ambB</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>difR</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>difG</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>difB</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hl</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ndh</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>spec</code></td></tr>
+<tr><td><code></code></td><td><code>Fresnel</code></td><td><code>F0</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ndv</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>om</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>fres</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>rx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ry</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>rz</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>env</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>refl</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>litR</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>litG</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>litB</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>r2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>g2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>a</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>r8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>g8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>r2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>g2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>a</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>r8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>g8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>sw</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>r2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>g2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>nc</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>nx</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>ny</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>nu</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>nv</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>i</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>nz</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>zPass</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>zStart</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>zBkt</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>zMnX</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>zMxX</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>zMnZ</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>zMxZ</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullX</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullZ</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullR2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>b0</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>b1</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>b2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>b3</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>byMin</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>byMax</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>culled</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>s0</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>s1</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mnx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mxx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mnz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mxz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>qx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>qz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ddx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ddz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>t1</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>t2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>t3</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wlo</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>whi</code></td></tr>
+<tr><td><code></code></td><td><code>kamera</code></td><td><code>culled</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ccx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ccy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ccz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cw</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ok</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>r2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cpx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cpy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>m3</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>px</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>py</code></td></tr>
+<tr><td><code></code></td><td><code>di</code></td><td><code>z</code></td></tr>
+<tr><td><code></code></td><td><code>ukuran</code></td><td><code>meter</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>pr</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ok</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>w</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>s2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cxx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cyy</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>c16</code></td></tr>
+<tr><td><code></code></td><td><code>long</code></td><td><code>_ts</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>mm</code></td></tr>
+<tr><td><code></code></td><td><code>Mat4</code></td><td><code>vp</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>vm</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>idm</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mcx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mcy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mcz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mhx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mhy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mhz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mcxW</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mcyW</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mczW</code></td></tr>
+<tr><td><code></code></td><td><code>matriks</code></td><td><code>model</code></td></tr>
+<tr><td><code></code></td><td><code>AABB</code></td><td><code>lokal</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>qx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>qz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>qdx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>qdz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wmx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wmy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wmz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>s0r</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>s1r</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>s2r</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>det</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>smax</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mwr2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mddx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mddz</code></td></tr>
+<tr><td><code></code></td><td><code>draw</code></td><td><code>call</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>sdx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>sdy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>sdz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>sd2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ns</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>bucketOn</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>zPass</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>zBkt</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fcx</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fcy</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fcz</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>frad2</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fList</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullX</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullZ</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullR2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>culled</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>bandOn</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>bandY0</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>bandY1</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>sh2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>f</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>bx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>by</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>bz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wbx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wby</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wbz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>rad2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ddx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ddz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cbw</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cbx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cby</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>m3</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>px</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>py</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>marg</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ndx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>sxc</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>sxm</code></td></tr>
+<tr><td><code></code></td><td><code>long</code></td><td><code>_tA</code></td></tr>
+<tr><td><code></code></td><td><code>long</code></td><td><code>_tB</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>n</code></td></tr>
+<tr><td><code></code></td><td><code>long</code></td><td><code>_tC</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fList</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullX</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullZ</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullR2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>i2</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>vStamp</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>stamp</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>mIdx</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>mStart</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>mLen</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>m_vx</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>m_vy</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>m_vz</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>wxa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>wya</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>wza</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>sxa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>sya</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>sza</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cXa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cYa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cZa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cWa</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>visa</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ff</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>s0</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ln0</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>j0</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>vi</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wxx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wyy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wzz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cpx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cpy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cpz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cw</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ddx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ddz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>invw</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>nx2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ny2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ff</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>s0</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ln0</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>j0</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>vi</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>lx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ly</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>lz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wxx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wyy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wzz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cpx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cpy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cpz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cw</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ddx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ddz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>invw</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>nx2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ny2</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fList</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>mIdx</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>mStart</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>mLen</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>sxa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>sya</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>sza</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cXa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cYa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cZa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>cWa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>wxa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>wya</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>wza</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fcx</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fcy</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fcz</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>visa</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullX</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>cullZ</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>n</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fDepthA</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fOrderA</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fNxA</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fNyA</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fNzA</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fColA</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fClipPA</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fClipNA</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clXa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clYa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clZa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clWa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clUa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clVa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clSXa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clSYa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>clSZa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolXa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolYa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolUa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolVa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>m_vu</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>m_vv</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>m_fnx</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>m_fny</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>m_fnz</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>m_fCol</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>hasCol</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>rigid</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>nsc</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>specRefR</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>specHalf</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>specStrength</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>lightX</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>lightY</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>lightZ</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>fogStart</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>fogEnd</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>fogInv</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fogR</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fogG</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fogB</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>culled2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>i3</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fg</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>s</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ln</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>nv</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>area</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>depth</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>j</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>a</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>bj</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>clipMode</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>cn</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>a</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>bj</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>aw</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>bw</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ain</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>bin</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>t</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>dsum</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>k</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>wi</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>sxx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>syy</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>k2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>front</code></td></tr>
+<tr><td><code></code></td><td><code>hitung</code></td><td><code>ulang</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>nxx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>nyy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>nzz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>bnx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>bny</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>bnz</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>a</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>bj</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>l</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>gwx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>gwy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>gwz</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>needC</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>gbx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>gby</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>gbz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>tvx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>tvy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>tvz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>dot</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>bc</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>shadeK</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>specW</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>vx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>vy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>vz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>v2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ir</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>vl</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hx</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hy</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hz</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hn</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>h2</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>t</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>sp</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>acc</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ex</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>hl</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>shaded</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>aa</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>r8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>g8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>r2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>g2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>finalCol</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fa</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>ff</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fr8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fg8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fb8</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fr2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fg2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fb2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>cn2</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>pX</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>pY</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>pU</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>pV</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>k</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>pn</code></td></tr>
+<tr><td><code></code></td><td><code>return</code></td><td><code>n</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>fDepthA</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>mx</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>si</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>nb</code></td></tr>
+<tr><td><code></code></td><td><code>float</code></td><td><code>q</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>cnt</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>zi</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>bTmpA</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>bkt</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>sum</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>b2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>c2</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>permA</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>bkt</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fOrderA</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fColA</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fClipNA</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>fClipPA</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolXa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolYa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolUa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>poolVa</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>mIdx</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>mStart</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>mLen</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>sxa</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>sya</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>m_vu</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>m_vv</code></td></tr>
+<tr><td><code></code></td><td><code>float[]</code></td><td><code>c16</code></td></tr>
+<tr><td><code></code></td><td><code>int[]</code></td><td><code>permA2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>drawn</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>oi</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ci</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>fi</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>s</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>ln</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>col2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>cn3</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>cp</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>k</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>vi</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>vi</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>j2</code></td></tr>
+<tr><td><code></code></td><td><code>int</code></td><td><code>vi</code></td></tr>
+</tbody></table></div>
+<h4>Methods</h4>
+<div class="api-sig"><code>warna final(shade × fog)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>hasil clip(0 = tidak ter-clip)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>hitung bucket(513)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>lolos uji(maks 64)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>hasil clipping(layar x,y + uv u,v)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>tahap A(cull face)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>tahap B(transform vertex)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>tahap C(collect/shade)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>statistik agregat(lintas mesh, tidak direset per draw)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>arah cahaya(dunia, menunjuk KE arah cahaya)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>cull vertex(fogEnd + margin)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>intensitas highlight(0 = off)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>eksponen gloss(tinggi = tajam)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>apa adanya(lantai/kisi, tanpa shade)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>tone map(pass cermin = kebiruan gelap)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>view vector(opsional)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>aturan cull(draw pass cermin)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>tidak konsisten(permukaan
+    // jalan GTASA sudah benar, rumah justru terbalik)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>pusat mesh(tebakan awal normalisasi)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>render paralel(y0..y1 px)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>fog jarak(depth cue)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>mulai memudar(meter)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>di sini(meter)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>statistik agregat(dipanggil profiler sekali per frame)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> resetStats()</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>aktifkan specular(Blinn-Phong half-vector)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>tambah putih(0..1+)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> setSpec(float strength, int power)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>sebelum shading(aset dengan winding tidak konsisten)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> setTwoSided(int v)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> setLight(float x, float y, float z)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> setFog(float start, float end, int col)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>jarak kamera(meter)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>int fogMix(int color, float dx, float dz)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>dalam fogStart(atau fog tidak aktif)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>sqrt if(d2 <= this.fogStart2 || this.fogInv <= 0.0f)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>blend if(d2 >= this.fogEnd2)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>alpha dipertahankan(lantai showroom semi-tembus pandang)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>lingkungan analitik(tiru sampleEnvironment)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>arah pantul(world)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> envSample(float rx, float ry, float rz, float[] out)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>float aces(float x)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>int shadeEnv(int color, float nx, float ny, float nz,
+                 float wx, float wy, float wz)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>Phong specular(pow 64, 0.65)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>dengan skalar(shading)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>int shade(int color, float k)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>kontribusi putih(0..1+)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>int shadeSpec(int color, float k, float specW)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> ensure(int vCap, int fCap)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> ensurePool()</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>tolak jarak(fog)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> markBuckets(Mesh m, float[] vm)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>else if(qx > mxx)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>else if(qz > mxz)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>sudut AABB(w = bidang linear)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>tak berpengaruh(whiteTex putih di UV mana pun)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> draw(Mesh m, Mat4 model, Camera3D cam, GlesSubmit g,
+              float sw, float sh, int baseColor)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>melewati draw()</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> cullAt(float x, float y, float z)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> setBand(float y0, float y1)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>pita vertikal(kolom)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> setBandX(float x0, float x1)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> clearBand()</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>menghadap kamera(billboard)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> drawBillboard(float px, float py, float pz, float size,
+                       Camera3D cam, GlesSubmit g, float sw, float sh,
+                       int color)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> drawTex(Mesh m, Mat4 model, Camera3D cam, GlesSubmit g,
+                 float sw, float sh, int baseColor)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>di dunia(dipakai untuk seed jarak specular)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>diputar langsung(bukan Newell per face)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>skala seragam(det > 0)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>Mesh memanjang(jalan 550 m, chunk dunia)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>else if(qx > m.bMaxX)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>else if(qz > m.bMaxZ)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>identitas besar(pasir/jalan/marka)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>oleh markBuckets()</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>sebelum transform(hemat
+                // tahap B/C/E sekaligus)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>pita layar(render paralel)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>yang memproses(hindari gambar ganda antar band)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> transformFaces(Mesh m, int ns, int idm, float[] mm, float[] vm,
+                        float sw, float sh)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>wz while(i2 < ns)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>int collectFaces(Mesh m, int ns, int idm, float[] mm,
+                     float sw, float sh, int baseColor)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>dari layar(sudah terhitung di atas)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>near clipping(Sutherland–Hodgman, w >= 0.02)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>depth linear(view-space)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>face subpiksel(|area| < 0.5 px²)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>else if(rigid == 1)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>base color(mesh.fCol)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>half vector(belum dinormalisasi)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>else if(this.envRefl > 0.0f)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>else if(specW > 0.0f)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>inline shade()</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>arah pandang(lebih wajar untuk kamera balap)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>di sini(jangan pakai alias poolXa lama)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>else if(clipMode != 2)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>sort kedalaman(dekat → jauh)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> sortFaces(int n)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>jumlah face(min 8, maks 512)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>histogram O(bucket)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>mesh kecil(pohon 4–20 face)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>depth negatif(dekat klip)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>terdekat if(bkt >= nb)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code> emitFaces(Mesh m, GlesSubmit g, int n)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>else if(ln == 4)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+<div class="api-sig"><code>else if(ln == 3)</code></div>
+<div class="api-desc">(Deskripsi dari source — lihat file untuk detail implementasi)</div>
+                <div class="pagination">
+                     
+                </div>
+            </div>
+        </main>
+
+        <!-- TOC -->
+        <aside class="toc" id="toc">
+            <div class="toc-title">On this page</div>
+            
+        </aside>
+
+        <!-- Mobile menu toggle -->
+        <button class="menu-toggle" id="menuToggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+    </div>
+
+    <script>
+        // Mobile menu
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+            document.addEventListener('click', (e) => {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target))
+                    sidebar.classList.remove('open');
+            });
+        }
+
+        // Copy code buttons
+        document.querySelectorAll('.code-copy').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const pre = btn.closest('.code-block').querySelector('pre');
+                navigator.clipboard.writeText(pre.textContent).then(() => {
+                    btn.classList.add('copied');
+                    btn.querySelector('span').textContent = 'Tersalin';
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.querySelector('span').textContent = 'Salin';
+                    }, 2000);
+                });
+            });
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const group = btn.closest('.tabs');
+                group.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                group.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                group.querySelector(btn.dataset.target).classList.add('active');
+            });
+        });
+
+        // TOC active state
+        const tocLinks = document.querySelectorAll('.toc a');
+        const headings = [];
+        tocLinks.forEach(a => {
+            const id = a.getAttribute('href').slice(1);
+            const h = document.getElementById(id);
+            if (h) headings.push([h, a]);
+        });
+        if (headings.length) {
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        tocLinks.forEach(a => a.classList.remove('active'));
+                        const link = headings.find(([h]) => h === e.target)?.[1];
+                        if (link) link.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-80px 0px -70% 0px' });
+            headings.forEach(([h]) => obs.observe(h));
+        }
+
+        // Search (client-side filter)
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && searchInput.value.trim()) {
+                    // Navigate to search page with query
+                    window.location.href = '../../../../search.html?q=' + encodeURIComponent(searchInput.value.trim());
+                }
+            });
+        }
+    </script>
+</body>
+</html>

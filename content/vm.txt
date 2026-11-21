@@ -82,7 +82,7 @@ KOPI_NOJIT=1        # disable JIT (debug)</code></pre>
 </tbody></table></div>
 
 <h3>Builtin Net.* Dispatch Table</h3>
-<p>Opcode <code>OP_NET (33)</code> dengan index <code>bi</code> (0-145). Lihat <a href="bahasa.html#builtin-net-system-calls">Bahasa Kopi</a> untuk daftar lengkap.</p>
+<p>Opcode <code>OP_NET (33)</code> dengan index <code>bi</code> (0-145). Lihat <a href="bahasa_kopi.html#builtin-net-system-calls">Bahasa Kopi</a> untuk daftar lengkap.</p>
 
 <h3>Thread Model</h3>
 <ul>

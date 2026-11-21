@@ -88,6 +88,7 @@ NAV_ITEMS = [
         ("Compiler (kopicc)", "compiler_kopicc.html", "stable"),
         ("Virtual Machine (kopivm)", "virtual_machine_kopivm.html", "stable"),
         ("Build System", "build_system.html", "beta"),
+        ("GTA SA Kopi (Android)", "gtasa_kopi.html", "stable"),
     ]),
     ("Pustaka Inti (lib/)", "api/core/Arrays.html", "package", [
         ("core/", "api/core/Arrays.html", "stable"),
@@ -97,7 +98,7 @@ NAV_ITEMS = [
         ("db/", "api/db/Sqlite.html", "beta"),
         ("encoding/", "api/encoding/Base64.html", "stable"),
         ("io/", "api/io/File.html", "stable"),
-        ("net/", "api/net/Http.html", "beta"),
+        ("net/", "api/net/Tcp.html", "beta"),
         ("system/", "api/system/Chan.html", "stable"),
         ("text/", "api/text/Str.html", "stable"),
         ("web/", "api/web/Http.html", "beta"),
@@ -105,13 +106,13 @@ NAV_ITEMS = [
     ("Game Engine (lib/game/)", "api/game/core/Engine.html", "cube", [
         ("core/", "api/game/core/Engine.html", "stable"),
         ("math/", "api/game/math/Vec2.html", "stable"),
-        ("render/2d/", "api/game/render2d/SpriteBatch.html", "stable"),
-        ("render/3d/", "api/game/render3d/Renderer3D.html", "stable"),
-        ("render/backend/", "api/game/render_backend/GlesSubmit.html", "stable"),
+        ("render/2d/", "api/game/render/2d/SpriteBatch.html", "stable"),
+        ("render/3d/", "api/game/render/3d/Renderer3D.html", "stable"),
+        ("render/backend/", "api/game/render/backend/GlesSubmit.html", "stable"),
         ("animation/", "api/game/animation/AnimationClip.html", "beta"),
         ("audio/", "api/game/audio/Audio.html", "beta"),
         ("scene/", "api/game/scene/Scene.html", "beta"),
-        ("physics/2d/", "api/game/physics2d/Body2D.html", "beta"),
+        ("physics/2d/", "api/game/physics/2d/Body2D.html", "beta"),
         ("input/", "api/game/input/InputManager.html", "stable"),
         ("ui/", "api/game/ui/Widget.html", "beta"),
         ("util/", "api/game/util/Fps.html", "beta"),
@@ -126,23 +127,36 @@ ICON_MAP = {
 
 CURRENT_URL = ""
 
-def build_nav():
+# semua halaman yang dihasilkan -> dipakai halaman pencarian
+PAGES = []
+
+def build_nav(prefix=""):
+    """prefix = "../" * kedalaman halaman, supaya link nav tidak 404."""
     parts = []
     for section_title, section_url, section_icon, items in NAV_ITEMS:
         parts.append(f'<div class="nav-section-title">{section_title}</div>')
         for title, url, status in items:
             active = " active" if url == CURRENT_URL else ""
-            parts.append(f'<a class="nav-item{active}" href="{url}"><span class="nav-icon">{ICON_MAP.get(section_icon, ICON_MAP["package"])}</span>{title}<span class="nav-badge {status}">{status}</span></a>')
+            parts.append(f'<a class="nav-item{active}" href="{prefix}{url}"><span class="nav-icon">{ICON_MAP.get(section_icon, ICON_MAP["package"])}</span>{title}<span class="nav-badge {status}">{status}</span></a>')
     return "\n".join(parts)
 
-def page(title, category, status, breadcrumb, content, prev="", next_link="", toc="", css_path=""):
+def slug(title):
+    return title.lower().replace(" ", "_").replace("(", "").replace(")", "").replace("/", "_") + ".html"
+
+def page(title, category, status, breadcrumb, content, prev="", next_link="", toc="", out_name=None, css_path=""):
+    # depth 0 = halaman di root docs; api/core/X.html -> depth 2, dst.
+    fname = out_name or slug(title)
+    depth = fname.count("/")
+    root = "../" * depth
     html = render(tpl(),
         TITLE=title, VERSION=VERSION, CATEGORY=category, STATUS=status,
-        ROOT="../", BREADCRUMB=breadcrumb, CONTENT=content,
-        PREV=prev, NEXT=next_link, NAV=build_nav(), TOC=toc, CSS_PATH=css_path
+        ROOT=root, BREADCRUMB=breadcrumb, CONTENT=content,
+        PREV=prev, NEXT=next_link, NAV=build_nav(root), TOC=toc, CSS_PATH=root
     )
-    fname = title.lower().replace(" ", "_").replace("(", "").replace(")", "").replace("/", "_") + ".html"
-    (OUT / fname).write_text(html, encoding="utf-8")
+    out_path = OUT / fname
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(html, encoding="utf-8")
+    PAGES.append((title, fname, category))
     print(f"Generated {fname}")
 
 # ==================== PAGE CONTENT LOADERS ====================
@@ -172,6 +186,7 @@ make            # build kopicc & kopivm
   <a class="card" href="api/core/Arrays.html"><div class="card-icon" style="background:rgba(255,166,87,0.15);color:#ffa657">&#128187;</div><div class="card-title">Pustaka Inti</div><div class="card-desc">core, compress, crypto, data, db, encoding, io, net, system, text, web.</div></a>
   <a class="card" href="api/game/core/Engine.html"><div class="card-icon" style="background:rgba(255,109,96,0.15);color:#f85149">&#127918;</div><div class="card-title">Game Engine</div><div class="card-desc">ECS, render 2D/3D, physics, audio, UI, scene graph, animation, input, networking.</div></a>
   <a class="card" href="android_integration.html"><div class="card-icon" style="background:rgba(160,210,100,0.15);color:#7ee787">&#128241;</div><div class="card-title">Android</div><div class="card-desc">libkopivm.so + JNI, AAssetManager, OpenSL/OpenAL, Vulkan/GLES.</div></a>
+  <a class="card" href="gtasa_kopi.html"><div class="card-icon" style="background:rgba(255,140,66,0.15);color:#ff8c42">&#127968;</div><div class="card-title">GTA SA Kopi</div><div class="card-desc">Studi kasus dunia terbuka: KCM multi/single-part, streaming, renderer 3D, APK Android.</div></a>
 </div>
 <h2>Versi & Status</h2>
 <div class="table-wrap"><table><thead><tr><th>Komponen</th><th>Versi</th><th>Status</th><th>Catatan</th></tr></thead><tbody>
@@ -187,11 +202,11 @@ make            # build kopicc & kopivm
     page("Dokumentasi Kopi", "Home", "Stable", "", content,
          '<a class="page-link" href="index.html"><span class="page-label">Previous</span><span class="page-title">&larr; Dokumentasi</span></a>',
          '<a class="page-link next" href="mulai_cepat.html"><span class="page-label">Next</span><span class="page-title">Mulai Cepat &rarr;</span></a>',
-         "", "")
+         "", out_name="index.html")
 
 def gen_mulai():
     global CURRENT_URL
-    CURRENT_URL = "mulai.html"
+    CURRENT_URL = "mulai_cepat.html"
     content = load_content("mulai") or """
 <h2>1. Persiapan</h2>
 <p>Kopi butuh compiler C (clang/gcc) dan <code>make</code>. Di Termux (Android):</p>
@@ -355,8 +370,19 @@ def gen_android():
          '<span class="sep">/</span><span class="current">Android</span>',
          content,
          '<a class="page-link" href="build_system.html"><span class="page-label">Previous</span><span class="page-title">&larr; Build System</span></a>',
-         '',
+         '<a class="page-link next" href="gtasa_kopi.html"><span class="page-label">Next</span><span class="page-title">GTA SA Kopi &rarr;</span></a>',
          "", "")
+
+def gen_gtasa():
+    global CURRENT_URL
+    CURRENT_URL = "gtasa_kopi.html"
+    content = load_content("gtasa") or "<p>Studi kasus GTA SA Kopi. Konten belum tersedia.</p>"
+    page("GTA SA Kopi", "Studi Kasus", "Stable",
+         '<span class="sep">/</span><span class="current">GTA SA Kopi</span>',
+         content,
+         '<a class="page-link" href="android_integration.html"><span class="page-label">Previous</span><span class="page-title">&larr; Android</span></a>',
+         '',
+         "", out_name="gtasa_kopi.html")
 
 # ==================== API GENERATION ====================
 
@@ -416,14 +442,12 @@ def gen_api_page(module_name: str, classes: dict):
                 content_parts.append('<div class="api-desc">(Deskripsi dari source \u2014 lihat file untuk detail implementasi)</div>')
     content = "\n".join(content_parts)
     toc = "\n".join([f'<a href="#{cls_name.lower()}">{cls_name}</a>' for cls_name in sorted(classes.keys())])
-    breadcrumb = f'<span class="sep">/</span><a href="../../api.html">API</a><span class="sep">/</span><span class="current">{cat_name}</span>'
-    html = render(tpl(), TITLE=f"API: {cat_name}", VERSION=VERSION, CATEGORY=cat_name, STATUS=status,
-        ROOT="../../", BREADCRUMB=breadcrumb, CONTENT=content, PREV='', NEXT='',
-        NAV=build_nav(), TOC=toc, CSS_PATH="../")
-    out_path = OUT / "api" / f"{module_name.replace('.', '_')}.html"
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(html, encoding="utf-8")
-    print(f"Generated {out_path}")
+    rel = "api/" + module_name.replace(".", "/") + ".html"
+    root = "../" * rel.count("/")
+    breadcrumb = f'<span class="sep">/</span><a href="{root}api.html">API</a><span class="sep">/</span><span class="current">{cat_name}</span>'
+    global CURRENT_URL
+    CURRENT_URL = rel
+    page(f"API: {cat_name}", cat_name, status, breadcrumb, content, out_name=rel)
 
 def gen_all_api():
     lib_root = ROOT / "lib"
@@ -436,21 +460,91 @@ def gen_all_api():
         modules[mod][cls_name] = info
     for mod, classes in modules.items():
         gen_api_page(mod, classes)
-    # API index
-    content = '<h2>API Reference Index</h2><p>Semua pustaka standar di <code>lib/</code>.</p>'
+
+    # halaman pertama tiap kategori (dipakai kartu API index)
+    cat_order = ["core", "compress", "crypto", "data", "db", "encoding",
+                 "io", "net", "system", "text", "web", "game"]
+    cat_name_map = {"core": "Core", "compress": "Compression", "crypto": "Cryptography",
+        "data": "Data Formats", "db": "Database", "encoding": "Encoding",
+        "io": "I/O", "net": "Network", "system": "System", "text": "Text",
+        "web": "Web", "game": "Game Engine"}
+    cat_first = {}
+    cat_count = {}
+    for mod in sorted(modules):
+        parts = mod.split(".")
+        if len(parts) < 2:
+            continue
+        cat = parts[1]
+        cat_count[cat] = cat_count.get(cat, 0) + 1
+        if cat not in cat_first:
+            cat_first[cat] = "api/" + mod.replace(".", "/") + ".html"
+
+    content = '<h2>API Reference Index</h2><p>Semua pustaka standar di <code>lib/</code>. Pilih kategori:</p>'
     content += '<div class="card-grid">'
-    for cat_key, cat_name in [("core", "Core"), ("compress", "Compression"), ("crypto", "Cryptography"),
-        ("data", "Data Formats"), ("db", "Database"), ("encoding", "Encoding"),
-        ("io", "I/O"), ("net", "Network"), ("system", "System"), ("text", "Text"),
-        ("web", "Web"), ("game", "Game Engine")]:
-        cnt = len([m for m in modules if m.startswith(cat_key)])
-        content += f'<a class="card" href="{cat_key}/Arrays.html"><div class="card-title">{cat_name}</div><div class="card-desc">{cnt} modules</div></a>'
+    for cat in cat_order:
+        if cat not in cat_first:
+            continue
+        content += (f'<a class="card" href="{cat_first[cat]}">'
+                    f'<div class="card-title">{cat_name_map.get(cat, cat.title())}</div>'
+                    f'<div class="card-desc">{cat_count[cat]} modul</div></a>')
     content += '</div>'
-    html = render(tpl(), TITLE="API Reference", VERSION=VERSION, CATEGORY="Reference", STATUS="Stable",
-        ROOT="../", BREADCRUMB='<span class="current">API Reference</span>',
-        CONTENT=content, PREV='', NEXT='', NAV=build_nav(), TOC="", CSS_PATH="")
-    (OUT / "api.html").write_text(html, encoding="utf-8")
-    print("Generated api.html")
+
+    # daftar semua modul, supaya tidak perlu menebak URL
+    content += '<h2>Semua Modul</h2><div class="table-wrap"><table><thead><tr><th>Modul</th><th>Halaman</th></tr></thead><tbody>'
+    for mod in sorted(modules):
+        href = "api/" + mod.replace(".", "/") + ".html"
+        content += f'<tr><td><code>{mod}</code></td><td><a href="{href}">buka</a></td></tr>'
+    content += '</tbody></table></div>'
+
+    global CURRENT_URL
+    CURRENT_URL = "api.html"
+    page("API Reference", "Reference", "Stable",
+         '<span class="current">API Reference</span>',
+         content, out_name="api.html")
+
+# ==================== PENCARIAN ====================
+
+def gen_search():
+    global CURRENT_URL
+    CURRENT_URL = "search.html"
+    rows = []
+    for title, url, cat in PAGES:
+        key = (title + " " + cat + " " + url).lower().replace('"', '&quot;')
+        rows.append(
+            f'<a class="search-item" href="{url}" data-k="{key}">'
+            f'<span class="search-title">{title}</span>'
+            f'<span class="search-cat">{cat}</span></a>')
+    content = """
+<h2>Cari Dokumentasi</h2>
+<p>Ketik untuk menyaring <span id="hits"></span>.</p>
+<input class="search-page-input" id="q" type="text" placeholder="Nama halaman, kategori, atau modul...">
+<div class="search-list" id="results">
+""" + "\n".join(rows) + """
+</div>
+<script>
+(function () {
+    var q = new URLSearchParams(window.location.search).get('q') || '';
+    var inp = document.getElementById('q');
+    var items = Array.prototype.slice.call(document.querySelectorAll('.search-item'));
+    inp.value = q;
+    function apply() {
+        var v = inp.value.toLowerCase().trim();
+        var n = 0;
+        items.forEach(function (el) {
+            var hit = !v || el.getAttribute('data-k').indexOf(v) >= 0;
+            el.style.display = hit ? '' : 'none';
+            if (hit) n += 1;
+        });
+        document.getElementById('hits').textContent = n + ' halaman';
+    }
+    inp.addEventListener('input', apply);
+    apply();
+})();
+</script>
+"""
+    page("Pencarian", "Pencarian", "Stable",
+         '<span class="current">Pencarian</span>',
+         content, out_name="search.html")
 
 # ==================== MAIN ====================
 
@@ -465,7 +559,9 @@ def main():
     gen_vm()
     gen_build()
     gen_android()
+    gen_gtasa()
     gen_all_api()
+    gen_search()
     
     (OUT / "assets" / "css").mkdir(parents=True, exist_ok=True)
     (OUT / "assets" / "js").mkdir(parents=True, exist_ok=True)

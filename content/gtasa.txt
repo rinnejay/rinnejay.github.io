@@ -1,0 +1,128 @@
+<p class="lead">Studi kasus nyata: menjalankan dunia terbuka GTA: San Andreas (grove/Los Santos) di atas engine Kopi — mulai dari format aset KCM, streaming dunia, renderer 3D, sampai APK Android yang benar-benar bisa jalan.</p>
+
+<h2>Ringkasan</h2>
+<div class="table-wrap"><table><thead><tr><th>Komponen</th><th>Isi</th><th>Status</th></tr></thead><tbody>
+<tr><td>Model</td><td>9 model KCM (5 rumah, 3 jalan, 1 pohon palem)</td><td>OK</td></tr>
+<tr><td>Instance dunia</td><td>1121 instance, 836 collider silinder</td><td>OK</td></tr>
+<tr><td>Varian aset</td><td><code>multi</code> (1 KCM = 1 model) &amp; <code>single</code> (1 KCM = 1 part, 68 file)</td><td>OK</td></tr>
+<tr><td>Output</td><td><code>gtasa_kopu-multi-1.0.apk</code>, <code>gtasa_kopu-single-1.0.apk</code> (5,3 MB)</td><td>OK</td></tr>
+<tr><td>Verifikasi</td><td>Simulasi frame 20 multi vs single identik piksel</td><td>OK</td></tr>
+</tbody></table></div>
+
+<h2>Kenapa KCM?</h2>
+<p>Format lama <code>.kpak</code> menyimpan teks OBJ/MTL dan PNG terkompresi. Runtime harus mem-parse teks dan men-dekode zlib setiap model di-stream — lambat dan rawan stall. <strong>KCM (Kopi Compiled Model)</strong> menyimpan hasil yang sudah siap GPU: geometri terkuantisasi, material sebagai byte warna, dan tekstur RGBA8 mentah.</p>
+
+<h3>Format KCM v1</h3>
+<div class="table-wrap"><table><thead><tr><th>Bagian</th><th>Ukuran</th><th>Isi</th></tr></thead><tbody>
+<tr><td>Header</td><td>64 B</td><td>magic <code>KCM1</code>, versi, flags (bit0 = UV, bit1 = sudah Y-up), jumlah part/material/tekstur, skala kuantisasi, offset section</td></tr>
+<tr><td>Part</td><td>32 B</td><td>nama, rentang vertex/indeks, indeks material</td></tr>
+<tr><td>Material</td><td>32 B</td><td>warna Kd/Ka/Ks/alpha, shininess, illum, indeks tekstur</td></tr>
+<tr><td>Tekstur</td><td>16 B + piksel</td><td>nama, lebar/tinggi, offset data RGBA8</td></tr>
+<tr><td>Vertex</td><td>10 B/vertex</td><td><code>int16 x,y,z,u,v</code></td></tr>
+<tr><td>Indeks</td><td>4 B/indeks</td><td><code>uint32</code>, segitiga</td></tr>
+</tbody></table></div>
+<p>Packer membakar konversi Z-up (GTA) ke Y-up (engine): <code>(x,y,z) -&gt; (x,z,-y)</code>, UV <code>v -&gt; 1-v</code>, dan winding <code>(a,b,c) -&gt; (a,c,b)</code>. File lama tanpa flag bit1 tetap dibaca dengan konversi di runtime.</p>
+
+<h2>Dua mode aset</h2>
+<p>Packer punya dua keluaran. Bytecode dan kode Java <strong>sama persis</strong> untuk keduanya; runtime memilih berdasarkan field <code>parts</code> di manifest.</p>
+
+<h3>1. Multi — satu KCM berisi satu model penuh</h3>
+<pre><code># tiap model -> satu file &lt;model&gt;.kcm (banyak part di dalamnya)
+python3 tools/pack_kcm.py --obj ganghous01_lax \
+    --objdir build/obj --texdir assets/tex --out build/kcm_multi</code></pre>
+<p>Manifest tidak punya field <code>parts</code>; runtime memuat <code>kcm/&lt;model&gt;.kcm</code>.</p>
+
+<h3>2. Single — satu KCM berisi satu part/objek</h3>
+<pre><code># tiap grup usemtl -> file sendiri &lt;model&gt;_p&lt;i&gt;.kcm
+python3 tools/pack_kcm.py --obj ganghous01_lax \
+    --objdir build/obj --texdir assets/tex --out build/kcm_single --split</code></pre>
+<p>Manifest diberi <code>"parts": N</code> per model; runtime memuat <code>&lt;model&gt;_p0.kcm</code> … <code>_p(N-1).kcm</code> lalu menggabungkannya. Hasil pada proyek ini: 68 file, 21 MB (multi: 9 file, 20 MB).</p>
+
+<h3>Menggabungkan part di runtime</h3>
+<pre><code>// KcmModel.kop
+static void merge(ObjModel dst, ObjModel src) {
+    ObjPart p = src.head.next;
+    while (p != src.head) {
+        ObjPart pn = p.next;
+        p.next = dst.head;
+        dst.tail.next = p;
+        dst.tail = p;
+        dst.partCount = dst.partCount + 1;
+        p = pn;
+    }
+    dst.totalVertices = dst.totalVertices + src.totalVertices;
+    dst.totalFaces = dst.totalFaces + src.totalFaces;
+    dst.recomputeBounds();
+}</code></pre>
+<p>Tidak perlu offset indeks: setiap part punya <code>Mesh</code> sendiri, jadi cukup menyambung linked list. Bila salah satu file part hilang, loader otomatis jatuh ke <code>&lt;model&gt;.kcm</code> (mode multi), sehingga satu <code>game.kbc</code> tetap kompatibel dengan kedua layout aset.</p>
+
+<h2>Streaming dunia</h2>
+<p><code>KpakStream</code> mengubah manifest menjadi tabel datar sekali saat load, lalu tiap frame:</p>
+<ol>
+<li>membuang instance yang lebih jauh dari <code>unloadRadius</code> (96 m);</li>
+<li>memasang maksimal 8 instance dari model yang sudah siap;</li>
+<li>memuat paling banyak <strong>satu model baru per frame</strong> (hindari stall);</li>
+<li>menandai model gagal secara permanen agar tidak dicoba berulang.</li>
+</ol>
+<p>Collider memakai sisi terpendek bbox (bukan diagonal), sehingga radius rumah tidak menutup jalan. Pohon memakai radius 0,55 m.</p>
+
+<h2>Perbaikan renderer</h2>
+<ul>
+<li><strong>Normal menghadap kamera</strong> — <code>Renderer3D.setTwoSided()</code> (opt-in, default 0) membalik normal face bila menghadap menjauh. Jalan tidak lagi hitam, tanpa mengubah perilaku renderer lama.</li>
+<li><strong>Batch terakhir ter-flush</strong> — <code>GlesSubmit.present()</code> memanggil <code>flush()</code> sebelum <code>Net.glPresent()</code>; sebelumnya objek terakhir tiap frame hilang.</li>
+<li><strong>Tekstur case-insensitive</strong> — MTL GTA menulis <code>craproad5_LAe.png</code> sementara file bernama <code>craproad5_lae.png</code>. Lookup di packer dan generator kini case-insensitive; permukaan abu-abu datar hilang.</li>
+<li><strong>Kamera</strong> — pitch diperbaiki, kaki pemain di <code>py = 0</code> (digambar <code>py + 0.35</code>).</li>
+</ul>
+
+<h2>Gameplay</h2>
+<ul>
+<li>Maju mengikuti arah pandang kamera (<code>+z</code> saat yaw 0); strafe dan setir mobil tidak terbalik.</li>
+<li>Hadap karakter <code>pyaw = atan2(worldX, worldZ)</code>.</li>
+<li>Mobil terparkir 6 m di belakang spawn; masuk/keluar dari sisi mobil, cooldown 30 frame.</li>
+</ul>
+
+<h2>Android: layar hitam &amp; JNI</h2>
+<p>Penyebab layar hitam yang sulit terlihat: <code>libkopivm.so</code> mengekspor simbol JNI untuk paket <code>com.rinnejay.kopiide.AndroidKopiVM</code>, sedangkan kelas game ada di <code>com.gtasa_kopu</code>. Setiap panggilan native pertama melempar <code>UnsatisfiedLinkError</code> — proses mati sebelum sempat menulis log.</p>
+<pre><code>$ nm -D libkopivm.so | grep Java_
+Java_com_rinnejay_kopiide_AndroidKopiVM_nativeInit
+Java_com_rinnejay_kopiide_AndroidKopiVM_nativeLoad
+...</code></pre>
+<p><strong>Solusi:</strong> kelas <code>AndroidKopiVM</code> dipindah ke paket <code>com.rinnejay.kopiide</code> (nama paket Java bebas dari applicationId). <code>MainActivity</code> tetap <code>com.gtasa_kopu.MainActivity</code> dan hanya meng-<em>import</em> kelas tersebut.</p>
+
+<h3>Log yang bisa dibaca</h3>
+<pre><code>/storage/emulated/0/Android/media/&lt;package&gt;/gtasa_kopu_log.txt   # Java + stdout VM
+/storage/emulated/0/Android/media/com.gtasa_kopu/gtasa_kopu_vm.txt  # Log.toFile dari Kopi
+logcat -d | grep GTASA_KOPU</code></pre>
+<p>Semua log Java juga dikirim ke logcat dengan tag <code>GTASA_KOPU</code>, jadi tetap terbaca walau penulisan file diblokir scoped storage.</p>
+
+<h2>Build APK</h2>
+<pre><code>cd ~/gtasa_kopi
+sh tools/build_apk.sh both      # atau: multi | single</code></pre>
+<div class="table-wrap"><table><thead><tr><th>Mode</th><th>Paket</th><th>Aset KCM</th><th>File</th></tr></thead><tbody>
+<tr><td><code>multi</code></td><td><code>com.gtasa_kopu</code></td><td>9 file</td><td><code>gtasa_kopu-multi-1.0.apk</code></td></tr>
+<tr><td><code>single</code></td><td><code>com.gtasa_kopu.single</code></td><td>68 file</td><td><code>gtasa_kopu-single-1.0.apk</code></td></tr>
+</tbody></table></div>
+<p>Paket berbeda agar kedua varian bisa terpasang berdampingan. Script juga mengompilasi bytecode dari <code>src/</code>, memakai ulang <code>android.jar</code> dari cache (<code>~/.cache/gtasa_kopi/</code>), dan menyalin hasil ke <code>/storage/emulated/0/Download/</code>.</p>
+
+<h3>Aset mati tidak ikut terpaket</h3>
+<p>Dulu <code>kpak/</code> (2,9 MB) dan <code>world_50x50.kpak</code> (37 MB) ikut masuk APK padahal tidak pernah dirujuk. Setelah dibersihkan: 16 MB → <strong>5,3 MB</strong>. Cek cepat:</p>
+<pre><code>grep -ao "assets/[A-Za-z0-9_./-]*" game.kbc | sort -u
+# assets/grove.json
+# assets/kcm/
+# assets/tex/desgreengrass.png
+# assets/world_manifest.json</code></pre>
+
+<h2>Verifikasi</h2>
+<ul>
+<li>Simulasi 60 frame: 9 model termuat, 1121 instance, 836 collider, jalan bertekstur.</li>
+<li>Simulasi "gaya APK" (tanpa prefix <code>assets/</code>) memuat manifest + KCM dari <code>kcm/</code>.</li>
+<li>Frame 20 mode multi dan single menghasilkan PPM identik (MD5 <code>a44877d2…</code>) — pemecahan part tidak mengubah visual.</li>
+<li><code>game.kbc</code> di kedua APK identik; 9 KCM (multi) / 68 KCM (single); tidak ada <code>kpak</code>.</li>
+</ul>
+
+<h2>Catatan</h2>
+<ul>
+<li><code>libkopivm.so</code> saat ini hanya tersedia untuk <code>arm64-v8a</code>; APK tidak akan jalan di perangkat 32-bit.</li>
+<li>Simulasi desktop memakai <code>KOPISIM=1 MAXFRAME=N kopivm game.kbc</code>, snapshot <code>build/sim*.ppm</code>.</li>
+<li>Radius streaming 72 m (load) / 96 m (unload) — naikkan bila ingin draw distance lebih jauh, dengan biaya memori tekstur.</li>
+</ul>

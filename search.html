@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencarian — Dokumentasi Kopi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="brand-logo">K</div>
+                <span class="brand-name">Kopi</span>
+                <span class="brand-version">1.54</span>
+            </div>
+            <div class="nav-section-title">Panduan</div>
+<a class="nav-item" href="mulai_cepat.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Mulai Cepat<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="bahasa_kopi.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Bahasa Kopi<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="compiler_kopicc.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Compiler (kopicc)<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="virtual_machine_kopivm.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Virtual Machine (kopivm)<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="build_system.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Build System<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="gtasa_kopi.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>GTA SA Kopi (Android)<span class="nav-badge stable">stable</span></a>
+<div class="nav-section-title">Pustaka Inti (lib/)</div>
+<a class="nav-item" href="api/core/Arrays.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>core/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/compress/Compress.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>compress/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/crypto/Crypto.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>crypto/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/data/Json.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>data/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/db/Sqlite.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>db/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/encoding/Base64.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>encoding/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/io/File.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>io/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/net/Tcp.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>net/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/system/Chan.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>system/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/text/Str.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>text/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/web/Http.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>web/<span class="nav-badge beta">beta</span></a>
+<div class="nav-section-title">Game Engine (lib/game/)</div>
+<a class="nav-item" href="api/game/core/Engine.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>core/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/math/Vec2.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>math/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/render/2d/SpriteBatch.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>render/2d/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/render/3d/Renderer3D.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>render/3d/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/render/backend/GlesSubmit.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>render/backend/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/animation/AnimationClip.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>animation/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/game/audio/Audio.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>audio/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/game/scene/Scene.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>scene/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/game/physics/2d/Body2D.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>physics/2d/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/game/input/InputManager.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>input/<span class="nav-badge stable">stable</span></a>
+<a class="nav-item" href="api/game/ui/Widget.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>ui/<span class="nav-badge beta">beta</span></a>
+<a class="nav-item" href="api/game/util/Fps.html"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 2v20"/><path d="M2 16h20"/></svg></span>util/<span class="nav-badge beta">beta</span></a>
+        </nav>
+
+        <!-- Main -->
+        <main class="content">
+            <div class="topbar">
+                <div class="topbar-breadcrumb">
+                    <a href="index.html">Dokumentasi</a>
+                    <span class="sep">/</span>
+                    <span class="current">Pencarian</span>
+                </div>
+                <div class="topbar-actions">
+                    <div class="search-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        <input type="text" placeholder="Cari dokumentasi..." id="searchInput">
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-inner">
+                <h1>Pencarian</h1>
+                <div class="doc-meta">
+                    <span class="meta-pill version">1.54</span>
+                    <span class="meta-pill category">Pencarian</span>
+                    <span class="meta-pill status">Stable</span>
+                </div>
+                
+<h2>Cari Dokumentasi</h2>
+<p>Ketik untuk menyaring <span id="hits"></span>.</p>
+<input class="search-page-input" id="q" type="text" placeholder="Nama halaman, kategori, atau modul...">
+<div class="search-list" id="results">
+<a class="search-item" href="index.html" data-k="dokumentasi kopi home index.html"><span class="search-title">Dokumentasi Kopi</span><span class="search-cat">Home</span></a>
+<a class="search-item" href="mulai_cepat.html" data-k="mulai cepat panduan mulai_cepat.html"><span class="search-title">Mulai Cepat</span><span class="search-cat">Panduan</span></a>
+<a class="search-item" href="bahasa_kopi.html" data-k="bahasa kopi panduan bahasa_kopi.html"><span class="search-title">Bahasa Kopi</span><span class="search-cat">Panduan</span></a>
+<a class="search-item" href="compiler_kopicc.html" data-k="compiler (kopicc) panduan compiler_kopicc.html"><span class="search-title">Compiler (kopicc)</span><span class="search-cat">Panduan</span></a>
+<a class="search-item" href="virtual_machine_kopivm.html" data-k="virtual machine (kopivm) panduan virtual_machine_kopivm.html"><span class="search-title">Virtual Machine (kopivm)</span><span class="search-cat">Panduan</span></a>
+<a class="search-item" href="build_system.html" data-k="build system panduan build_system.html"><span class="search-title">Build System</span><span class="search-cat">Panduan</span></a>
+<a class="search-item" href="android_integration.html" data-k="android integration platform android_integration.html"><span class="search-title">Android Integration</span><span class="search-cat">Platform</span></a>
+<a class="search-item" href="gtasa_kopi.html" data-k="gta sa kopi studi kasus gtasa_kopi.html"><span class="search-title">GTA SA Kopi</span><span class="search-cat">Studi Kasus</span></a>
+<a class="search-item" href="api/F.html" data-k="api: core library core library api/f.html"><span class="search-title">API: Core Library</span><span class="search-cat">Core Library</span></a>
+<a class="search-item" href="api/io/Reader.html" data-k="api: reader reader api/io/reader.html"><span class="search-title">API: Reader</span><span class="search-cat">Reader</span></a>
+<a class="search-item" href="api/io/Writer.html" data-k="api: writer writer api/io/writer.html"><span class="search-title">API: Writer</span><span class="search-cat">Writer</span></a>
+<a class="search-item" href="api/io/File.html" data-k="api: file file api/io/file.html"><span class="search-title">API: File</span><span class="search-cat">File</span></a>
+<a class="search-item" href="api/io/Path.html" data-k="api: path path api/io/path.html"><span class="search-title">API: Path</span><span class="search-cat">Path</span></a>
+<a class="search-item" href="api/io/Asset.html" data-k="api: asset asset api/io/asset.html"><span class="search-title">API: Asset</span><span class="search-cat">Asset</span></a>
+<a class="search-item" href="api/db/Sqlite.html" data-k="api: sqlite sqlite api/db/sqlite.html"><span class="search-title">API: Sqlite</span><span class="search-cat">Sqlite</span></a>
+<a class="search-item" href="api/encoding/Base64.html" data-k="api: base64 base64 api/encoding/base64.html"><span class="search-title">API: Base64</span><span class="search-cat">Base64</span></a>
+<a class="search-item" href="api/encoding/Hex.html" data-k="api: hex hex api/encoding/hex.html"><span class="search-title">API: Hex</span><span class="search-cat">Hex</span></a>
+<a class="search-item" href="api/encoding/Base58.html" data-k="api: base58 base58 api/encoding/base58.html"><span class="search-title">API: Base58</span><span class="search-cat">Base58</span></a>
+<a class="search-item" href="api/encoding/Base85.html" data-k="api: base85 base85 api/encoding/base85.html"><span class="search-title">API: Base85</span><span class="search-cat">Base85</span></a>
+<a class="search-item" href="api/text/Str.html" data-k="api: str str api/text/str.html"><span class="search-title">API: Str</span><span class="search-cat">Str</span></a>
+<a class="search-item" href="api/text/Text.html" data-k="api: text text api/text/text.html"><span class="search-title">API: Text</span><span class="search-cat">Text</span></a>
+<a class="search-item" href="api/text/Regex.html" data-k="api: regex regex api/text/regex.html"><span class="search-title">API: Regex</span><span class="search-cat">Regex</span></a>
+<a class="search-item" href="api/data/Cbor.html" data-k="api: cbor cbor api/data/cbor.html"><span class="search-title">API: Cbor</span><span class="search-cat">Cbor</span></a>
+<a class="search-item" href="api/data/Config.html" data-k="api: config config api/data/config.html"><span class="search-title">API: Config</span><span class="search-cat">Config</span></a>
+<a class="search-item" href="api/data/Cookie.html" data-k="api: cookie cookie api/data/cookie.html"><span class="search-title">API: Cookie</span><span class="search-cat">Cookie</span></a>
+<a class="search-item" href="api/data/Csv.html" data-k="api: csv csv api/data/csv.html"><span class="search-title">API: Csv</span><span class="search-cat">Csv</span></a>
+<a class="search-item" href="api/data/Json.html" data-k="api: json json api/data/json.html"><span class="search-title">API: Json</span><span class="search-cat">Json</span></a>
+<a class="search-item" href="api/data/MessagePack.html" data-k="api: messagepack messagepack api/data/messagepack.html"><span class="search-title">API: Messagepack</span><span class="search-cat">Messagepack</span></a>
+<a class="search-item" href="api/compress/Checksum.html" data-k="api: checksum checksum api/compress/checksum.html"><span class="search-title">API: Checksum</span><span class="search-cat">Checksum</span></a>
+<a class="search-item" href="api/compress/Compress.html" data-k="api: compress compress api/compress/compress.html"><span class="search-title">API: Compress</span><span class="search-cat">Compress</span></a>
+<a class="search-item" href="api/compress/Filter.html" data-k="api: filter filter api/compress/filter.html"><span class="search-title">API: Filter</span><span class="search-cat">Filter</span></a>
+<a class="search-item" href="api/compress/Lzma.html" data-k="api: lzma lzma api/compress/lzma.html"><span class="search-title">API: Lzma</span><span class="search-cat">Lzma</span></a>
+<a class="search-item" href="api/compress/Lzma2.html" data-k="api: lzma2 lzma2 api/compress/lzma2.html"><span class="search-title">API: Lzma2</span><span class="search-cat">Lzma2</span></a>
+<a class="search-item" href="api/compress/LzmaAuto.html" data-k="api: lzmaauto lzmaauto api/compress/lzmaauto.html"><span class="search-title">API: Lzmaauto</span><span class="search-cat">Lzmaauto</span></a>
+<a class="search-item" href="api/compress/LzmaStream.html" data-k="api: lzmastream lzmastream api/compress/lzmastream.html"><span class="search-title">API: Lzmastream</span><span class="search-cat">Lzmastream</span></a>
+<a class="search-item" href="api/compress/Xz.html" data-k="api: xz xz api/compress/xz.html"><span class="search-title">API: Xz</span><span class="search-cat">Xz</span></a>
+<a class="search-item" href="api/system/Args.html" data-k="api: args args api/system/args.html"><span class="search-title">API: Args</span><span class="search-cat">Args</span></a>
+<a class="search-item" href="api/system/Env.html" data-k="api: env env api/system/env.html"><span class="search-title">API: Env</span><span class="search-cat">Env</span></a>
+<a class="search-item" href="api/system/Log.html" data-k="api: log log api/system/log.html"><span class="search-title">API: Log</span><span class="search-cat">Log</span></a>
+<a class="search-item" href="api/system/Time.html" data-k="api: time time api/system/time.html"><span class="search-title">API: Time</span><span class="search-cat">Time</span></a>
+<a class="search-item" href="api/system/Uuid.html" data-k="api: uuid uuid api/system/uuid.html"><span class="search-title">API: Uuid</span><span class="search-cat">Uuid</span></a>
+<a class="search-item" href="api/system/Chan.html" data-k="api: chan chan api/system/chan.html"><span class="search-title">API: Chan</span><span class="search-cat">Chan</span></a>
+<a class="search-item" href="api/system/Mutex.html" data-k="api: mutex mutex api/system/mutex.html"><span class="search-title">API: Mutex</span><span class="search-cat">Mutex</span></a>
+<a class="search-item" href="api/web/Http.html" data-k="api: http http api/web/http.html"><span class="search-title">API: Http</span><span class="search-cat">Http</span></a>
+<a class="search-item" href="api/web/Http2.html" data-k="api: http2 http2 api/web/http2.html"><span class="search-title">API: Http2</span><span class="search-cat">Http2</span></a>
+<a class="search-item" href="api/web/Http2Tabel.html" data-k="api: http2tabel http2tabel api/web/http2tabel.html"><span class="search-title">API: Http2Tabel</span><span class="search-cat">Http2Tabel</span></a>
+<a class="search-item" href="api/web/HttpServer.html" data-k="api: httpserver httpserver api/web/httpserver.html"><span class="search-title">API: Httpserver</span><span class="search-cat">Httpserver</span></a>
+<a class="search-item" href="api/web/Mime.html" data-k="api: mime mime api/web/mime.html"><span class="search-title">API: Mime</span><span class="search-cat">Mime</span></a>
+<a class="search-item" href="api/web/Multipart.html" data-k="api: multipart multipart api/web/multipart.html"><span class="search-title">API: Multipart</span><span class="search-cat">Multipart</span></a>
+<a class="search-item" href="api/web/Static.html" data-k="api: static static api/web/static.html"><span class="search-title">API: Static</span><span class="search-cat">Static</span></a>
+<a class="search-item" href="api/web/Url.html" data-k="api: url url api/web/url.html"><span class="search-title">API: Url</span><span class="search-cat">Url</span></a>
+<a class="search-item" href="api/web/WebSocket.html" data-k="api: websocket websocket api/web/websocket.html"><span class="search-title">API: Websocket</span><span class="search-cat">Websocket</span></a>
+<a class="search-item" href="api/web/WsClient.html" data-k="api: wsclient wsclient api/web/wsclient.html"><span class="search-title">API: Wsclient</span><span class="search-cat">Wsclient</span></a>
+<a class="search-item" href="api/web/Auth.html" data-k="api: auth auth api/web/auth.html"><span class="search-title">API: Auth</span><span class="search-cat">Auth</span></a>
+<a class="search-item" href="api/web/Jwt.html" data-k="api: jwt jwt api/web/jwt.html"><span class="search-title">API: Jwt</span><span class="search-cat">Jwt</span></a>
+<a class="search-item" href="api/web/Session.html" data-k="api: session session api/web/session.html"><span class="search-title">API: Session</span><span class="search-cat">Session</span></a>
+<a class="search-item" href="api/web/Router.html" data-k="api: router router api/web/router.html"><span class="search-title">API: Router</span><span class="search-cat">Router</span></a>
+<a class="search-item" href="api/crypto/Crypto.html" data-k="api: crypto crypto api/crypto/crypto.html"><span class="search-title">API: Crypto</span><span class="search-cat">Crypto</span></a>
+<a class="search-item" href="api/crypto/Cipher.html" data-k="api: cipher cipher api/crypto/cipher.html"><span class="search-title">API: Cipher</span><span class="search-cat">Cipher</span></a>
+<a class="search-item" href="api/crypto/Hash.html" data-k="api: hash hash api/crypto/hash.html"><span class="search-title">API: Hash</span><span class="search-cat">Hash</span></a>
+<a class="search-item" href="api/crypto/Kdf.html" data-k="api: kdf kdf api/crypto/kdf.html"><span class="search-title">API: Kdf</span><span class="search-cat">Kdf</span></a>
+<a class="search-item" href="api/crypto/Big.html" data-k="api: big big api/crypto/big.html"><span class="search-title">API: Big</span><span class="search-cat">Big</span></a>
+<a class="search-item" href="api/crypto/X25519.html" data-k="api: x25519 x25519 api/crypto/x25519.html"><span class="search-title">API: X25519</span><span class="search-cat">X25519</span></a>
+<a class="search-item" href="api/crypto/ChaCha.html" data-k="api: chacha chacha api/crypto/chacha.html"><span class="search-title">API: Chacha</span><span class="search-cat">Chacha</span></a>
+<a class="search-item" href="api/crypto/Poly.html" data-k="api: poly poly api/crypto/poly.html"><span class="search-title">API: Poly</span><span class="search-cat">Poly</span></a>
+<a class="search-item" href="api/crypto/Aead.html" data-k="api: aead aead api/crypto/aead.html"><span class="search-title">API: Aead</span><span class="search-cat">Aead</span></a>
+<a class="search-item" href="api/crypto/Rand.html" data-k="api: rand rand api/crypto/rand.html"><span class="search-title">API: Rand</span><span class="search-cat">Rand</span></a>
+<a class="search-item" href="api/crypto/Der.html" data-k="api: der der api/crypto/der.html"><span class="search-title">API: Der</span><span class="search-cat">Der</span></a>
+<a class="search-item" href="api/crypto/Pbkdf2.html" data-k="api: pbkdf2 pbkdf2 api/crypto/pbkdf2.html"><span class="search-title">API: Pbkdf2</span><span class="search-cat">Pbkdf2</span></a>
+<a class="search-item" href="api/crypto/Aes.html" data-k="api: aes aes api/crypto/aes.html"><span class="search-title">API: Aes</span><span class="search-cat">Aes</span></a>
+<a class="search-item" href="api/crypto/Gcm.html" data-k="api: gcm gcm api/crypto/gcm.html"><span class="search-title">API: Gcm</span><span class="search-cat">Gcm</span></a>
+<a class="search-item" href="api/crypto/Pem.html" data-k="api: pem pem api/crypto/pem.html"><span class="search-title">API: Pem</span><span class="search-cat">Pem</span></a>
+<a class="search-item" href="api/crypto/X509.html" data-k="api: x509 x509 api/crypto/x509.html"><span class="search-title">API: X509</span><span class="search-cat">X509</span></a>
+<a class="search-item" href="api/crypto/Blake2b.html" data-k="api: blake2b blake2b api/crypto/blake2b.html"><span class="search-title">API: Blake2B</span><span class="search-cat">Blake2B</span></a>
+<a class="search-item" href="api/crypto/Scrypt.html" data-k="api: scrypt scrypt api/crypto/scrypt.html"><span class="search-title">API: Scrypt</span><span class="search-cat">Scrypt</span></a>
+<a class="search-item" href="api/crypto/Rsa.html" data-k="api: rsa rsa api/crypto/rsa.html"><span class="search-title">API: Rsa</span><span class="search-cat">Rsa</span></a>
+<a class="search-item" href="api/crypto/Ecdsa.html" data-k="api: ecdsa ecdsa api/crypto/ecdsa.html"><span class="search-title">API: Ecdsa</span><span class="search-cat">Ecdsa</span></a>
+<a class="search-item" href="api/crypto/Subtle.html" data-k="api: subtle subtle api/crypto/subtle.html"><span class="search-title">API: Subtle</span><span class="search-cat">Subtle</span></a>
+<a class="search-item" href="api/crypto/Sha3.html" data-k="api: sha3 sha3 api/crypto/sha3.html"><span class="search-title">API: Sha3</span><span class="search-cat">Sha3</span></a>
+<a class="search-item" href="api/crypto/SipHash.html" data-k="api: siphash siphash api/crypto/siphash.html"><span class="search-title">API: Siphash</span><span class="search-cat">Siphash</span></a>
+<a class="search-item" href="api/crypto/XChaCha.html" data-k="api: xchacha xchacha api/crypto/xchacha.html"><span class="search-title">API: Xchacha</span><span class="search-cat">Xchacha</span></a>
+<a class="search-item" href="api/crypto/Ascon.html" data-k="api: ascon ascon api/crypto/ascon.html"><span class="search-title">API: Ascon</span><span class="search-cat">Ascon</span></a>
+<a class="search-item" href="api/core/Digits.html" data-k="api: digits digits api/core/digits.html"><span class="search-title">API: Digits</span><span class="search-cat">Digits</span></a>
+<a class="search-item" href="api/core/Stats.html" data-k="api: stats stats api/core/stats.html"><span class="search-title">API: Stats</span><span class="search-cat">Stats</span></a>
+<a class="search-item" href="api/core/Arrays.html" data-k="api: arrays arrays api/core/arrays.html"><span class="search-title">API: Arrays</span><span class="search-cat">Arrays</span></a>
+<a class="search-item" href="api/core/Math.html" data-k="api: math math api/core/math.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/core/Matrix.html" data-k="api: matrix matrix api/core/matrix.html"><span class="search-title">API: Matrix</span><span class="search-cat">Matrix</span></a>
+<a class="search-item" href="api/core/Deque.html" data-k="api: deque deque api/core/deque.html"><span class="search-title">API: Deque</span><span class="search-cat">Deque</span></a>
+<a class="search-item" href="api/core/MapStr.html" data-k="api: mapstr mapstr api/core/mapstr.html"><span class="search-title">API: Mapstr</span><span class="search-cat">Mapstr</span></a>
+<a class="search-item" href="api/core/Set.html" data-k="api: set set api/core/set.html"><span class="search-title">API: Set</span><span class="search-cat">Set</span></a>
+<a class="search-item" href="api/core/Map.html" data-k="api: map map api/core/map.html"><span class="search-title">API: Map</span><span class="search-cat">Map</span></a>
+<a class="search-item" href="api/core/Bytes.html" data-k="api: bytes bytes api/core/bytes.html"><span class="search-title">API: Bytes</span><span class="search-cat">Bytes</span></a>
+<a class="search-item" href="api/core/List.html" data-k="api: list list api/core/list.html"><span class="search-title">API: List</span><span class="search-cat">List</span></a>
+<a class="search-item" href="api/core/ListStr.html" data-k="api: liststr liststr api/core/liststr.html"><span class="search-title">API: Liststr</span><span class="search-cat">Liststr</span></a>
+<a class="search-item" href="api/core/MapSS.html" data-k="api: mapss mapss api/core/mapss.html"><span class="search-title">API: Mapss</span><span class="search-cat">Mapss</span></a>
+<a class="search-item" href="api/core/SetStr.html" data-k="api: setstr setstr api/core/setstr.html"><span class="search-title">API: Setstr</span><span class="search-cat">Setstr</span></a>
+<a class="search-item" href="api/core/Test.html" data-k="api: test test api/core/test.html"><span class="search-title">API: Test</span><span class="search-cat">Test</span></a>
+<a class="search-item" href="api/core/BigInt.html" data-k="api: bigint bigint api/core/bigint.html"><span class="search-title">API: Bigint</span><span class="search-cat">Bigint</span></a>
+<a class="search-item" href="api/net/Tcp.html" data-k="api: tcp tcp api/net/tcp.html"><span class="search-title">API: Tcp</span><span class="search-cat">Tcp</span></a>
+<a class="search-item" href="api/net/Dns.html" data-k="api: dns dns api/net/dns.html"><span class="search-title">API: Dns</span><span class="search-cat">Dns</span></a>
+<a class="search-item" href="api/net/Rfc.html" data-k="api: rfc rfc api/net/rfc.html"><span class="search-title">API: Rfc</span><span class="search-cat">Rfc</span></a>
+<a class="search-item" href="api/net/Tls.html" data-k="api: tls tls api/net/tls.html"><span class="search-title">API: Tls</span><span class="search-cat">Tls</span></a>
+<a class="search-item" href="api/net/Udp.html" data-k="api: udp udp api/net/udp.html"><span class="search-title">API: Udp</span><span class="search-cat">Udp</span></a>
+<a class="search-item" href="api/net/Resolv.html" data-k="api: resolv resolv api/net/resolv.html"><span class="search-title">API: Resolv</span><span class="search-cat">Resolv</span></a>
+<a class="search-item" href="api/net/TlsServer.html" data-k="api: tlsserver tlsserver api/net/tlsserver.html"><span class="search-title">API: Tlsserver</span><span class="search-cat">Tlsserver</span></a>
+<a class="search-item" href="api/game/core/Engine.html" data-k="api: core library core library api/game/core/engine.html"><span class="search-title">API: Core Library</span><span class="search-cat">Core Library</span></a>
+<a class="search-item" href="api/game/core/FrameTime.html" data-k="api: core library core library api/game/core/frametime.html"><span class="search-title">API: Core Library</span><span class="search-cat">Core Library</span></a>
+<a class="search-item" href="api/game/core/Caps.html" data-k="api: core library core library api/game/core/caps.html"><span class="search-title">API: Core Library</span><span class="search-cat">Core Library</span></a>
+<a class="search-item" href="api/game/ecs/World.html" data-k="api: ecs ecs api/game/ecs/world.html"><span class="search-title">API: Ecs</span><span class="search-cat">Ecs</span></a>
+<a class="search-item" href="api/game/ecs/ComponentPool.html" data-k="api: ecs ecs api/game/ecs/componentpool.html"><span class="search-title">API: Ecs</span><span class="search-cat">Ecs</span></a>
+<a class="search-item" href="api/game/ecs/Components.html" data-k="api: ecs ecs api/game/ecs/components.html"><span class="search-title">API: Ecs</span><span class="search-cat">Ecs</span></a>
+<a class="search-item" href="api/game/ui/AbsoluteLayout.html" data-k="api: ui ui api/game/ui/absolutelayout.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/Button.html" data-k="api: ui ui api/game/ui/button.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/Container.html" data-k="api: ui ui api/game/ui/container.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/FlexLayout.html" data-k="api: ui ui api/game/ui/flexlayout.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/FocusManager.html" data-k="api: ui ui api/game/ui/focusmanager.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/GridLayout.html" data-k="api: ui ui api/game/ui/gridlayout.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/Image.html" data-k="api: ui ui api/game/ui/image.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/InputField.html" data-k="api: ui ui api/game/ui/inputfield.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/Layout.html" data-k="api: ui ui api/game/ui/layout.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/ListView.html" data-k="api: ui ui api/game/ui/listview.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/Navigation.html" data-k="api: ui ui api/game/ui/navigation.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/ScrollView.html" data-k="api: ui ui api/game/ui/scrollview.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/Slider.html" data-k="api: ui ui api/game/ui/slider.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/Ui.html" data-k="api: ui ui api/game/ui/ui.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/Theme.html" data-k="api: ui ui api/game/ui/theme.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/Toggle.html" data-k="api: ui ui api/game/ui/toggle.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/Tooltip.html" data-k="api: ui ui api/game/ui/tooltip.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/UIEvent.html" data-k="api: ui ui api/game/ui/uievent.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/UIManager.html" data-k="api: ui ui api/game/ui/uimanager.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/UIRenderer.html" data-k="api: ui ui api/game/ui/uirenderer.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/Widget.html" data-k="api: ui ui api/game/ui/widget.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/ui/TextWidget.html" data-k="api: ui ui api/game/ui/textwidget.html"><span class="search-title">API: Ui</span><span class="search-cat">Ui</span></a>
+<a class="search-item" href="api/game/input/InputManager.html" data-k="api: input input api/game/input/inputmanager.html"><span class="search-title">API: Input</span><span class="search-cat">Input</span></a>
+<a class="search-item" href="api/game/input/Keyboard.html" data-k="api: input input api/game/input/keyboard.html"><span class="search-title">API: Input</span><span class="search-cat">Input</span></a>
+<a class="search-item" href="api/game/input/Mouse.html" data-k="api: input input api/game/input/mouse.html"><span class="search-title">API: Input</span><span class="search-cat">Input</span></a>
+<a class="search-item" href="api/game/input/Touch.html" data-k="api: input input api/game/input/touch.html"><span class="search-title">API: Input</span><span class="search-cat">Input</span></a>
+<a class="search-item" href="api/game/input/Gamepad.html" data-k="api: input input api/game/input/gamepad.html"><span class="search-title">API: Input</span><span class="search-cat">Input</span></a>
+<a class="search-item" href="api/game/input/GestureRecognizer.html" data-k="api: input input api/game/input/gesturerecognizer.html"><span class="search-title">API: Input</span><span class="search-cat">Input</span></a>
+<a class="search-item" href="api/game/input/InputAction.html" data-k="api: input input api/game/input/inputaction.html"><span class="search-title">API: Input</span><span class="search-cat">Input</span></a>
+<a class="search-item" href="api/game/input/InputMapper.html" data-k="api: input input api/game/input/inputmapper.html"><span class="search-title">API: Input</span><span class="search-cat">Input</span></a>
+<a class="search-item" href="api/game/animation/AnimationClip.html" data-k="api: animation animation api/game/animation/animationclip.html"><span class="search-title">API: Animation</span><span class="search-cat">Animation</span></a>
+<a class="search-item" href="api/game/animation/AnimationState.html" data-k="api: animation animation api/game/animation/animationstate.html"><span class="search-title">API: Animation</span><span class="search-cat">Animation</span></a>
+<a class="search-item" href="api/game/animation/AnimationSystem.html" data-k="api: animation animation api/game/animation/animationsystem.html"><span class="search-title">API: Animation</span><span class="search-cat">Animation</span></a>
+<a class="search-item" href="api/game/animation/AnimationTransition.html" data-k="api: animation animation api/game/animation/animationtransition.html"><span class="search-title">API: Animation</span><span class="search-cat">Animation</span></a>
+<a class="search-item" href="api/game/animation/Animator.html" data-k="api: animation animation api/game/animation/animator.html"><span class="search-title">API: Animation</span><span class="search-cat">Animation</span></a>
+<a class="search-item" href="api/game/animation/BlendTree.html" data-k="api: animation animation api/game/animation/blendtree.html"><span class="search-title">API: Animation</span><span class="search-cat">Animation</span></a>
+<a class="search-item" href="api/game/animation/MorphTarget.html" data-k="api: animation animation api/game/animation/morphtarget.html"><span class="search-title">API: Animation</span><span class="search-cat">Animation</span></a>
+<a class="search-item" href="api/game/animation/SkeletalAnimation.html" data-k="api: animation animation api/game/animation/skeletalanimation.html"><span class="search-title">API: Animation</span><span class="search-cat">Animation</span></a>
+<a class="search-item" href="api/game/animation/Timeline.html" data-k="api: animation animation api/game/animation/timeline.html"><span class="search-title">API: Animation</span><span class="search-cat">Animation</span></a>
+<a class="search-item" href="api/game/animation/Tween.html" data-k="api: animation animation api/game/animation/tween.html"><span class="search-title">API: Animation</span><span class="search-cat">Animation</span></a>
+<a class="search-item" href="api/game/animation/AnimLoader.html" data-k="api: animation animation api/game/animation/animloader.html"><span class="search-title">API: Animation</span><span class="search-cat">Animation</span></a>
+<a class="search-item" href="api/game/fx/Emitter2D.html" data-k="api: fx fx api/game/fx/emitter2d.html"><span class="search-title">API: Fx</span><span class="search-cat">Fx</span></a>
+<a class="search-item" href="api/game/scene/AssetManager.html" data-k="api: scene scene api/game/scene/assetmanager.html"><span class="search-title">API: Scene</span><span class="search-cat">Scene</span></a>
+<a class="search-item" href="api/game/scene/AssetRef.html" data-k="api: scene scene api/game/scene/assetref.html"><span class="search-title">API: Scene</span><span class="search-cat">Scene</span></a>
+<a class="search-item" href="api/game/scene/Prefab.html" data-k="api: scene scene api/game/scene/prefab.html"><span class="search-title">API: Scene</span><span class="search-cat">Scene</span></a>
+<a class="search-item" href="api/game/scene/Scene.html" data-k="api: scene scene api/game/scene/scene.html"><span class="search-title">API: Scene</span><span class="search-cat">Scene</span></a>
+<a class="search-item" href="api/game/scene/SceneLoader.html" data-k="api: scene scene api/game/scene/sceneloader.html"><span class="search-title">API: Scene</span><span class="search-cat">Scene</span></a>
+<a class="search-item" href="api/game/scene/SceneManager.html" data-k="api: scene scene api/game/scene/scenemanager.html"><span class="search-title">API: Scene</span><span class="search-cat">Scene</span></a>
+<a class="search-item" href="api/game/scene/Serialization.html" data-k="api: scene scene api/game/scene/serialization.html"><span class="search-title">API: Scene</span><span class="search-cat">Scene</span></a>
+<a class="search-item" href="api/game/net/ScoreApi.html" data-k="api: network network api/game/net/scoreapi.html"><span class="search-title">API: Network</span><span class="search-cat">Network</span></a>
+<a class="search-item" href="api/game/utils/Color.html" data-k="api: utils utils api/game/utils/color.html"><span class="search-title">API: Utils</span><span class="search-cat">Utils</span></a>
+<a class="search-item" href="api/game/util/Fps.html" data-k="api: util util api/game/util/fps.html"><span class="search-title">API: Util</span><span class="search-cat">Util</span></a>
+<a class="search-item" href="api/game/obj/ObjPart.html" data-k="api: obj obj api/game/obj/objpart.html"><span class="search-title">API: Obj</span><span class="search-cat">Obj</span></a>
+<a class="search-item" href="api/game/obj/MtlLibrary.html" data-k="api: obj obj api/game/obj/mtllibrary.html"><span class="search-title">API: Obj</span><span class="search-cat">Obj</span></a>
+<a class="search-item" href="api/game/obj/ObjModel.html" data-k="api: obj obj api/game/obj/objmodel.html"><span class="search-title">API: Obj</span><span class="search-cat">Obj</span></a>
+<a class="search-item" href="api/game/obj/MtlMaterial.html" data-k="api: obj obj api/game/obj/mtlmaterial.html"><span class="search-title">API: Obj</span><span class="search-cat">Obj</span></a>
+<a class="search-item" href="api/game/obj/ObjReader.html" data-k="api: obj obj api/game/obj/objreader.html"><span class="search-title">API: Obj</span><span class="search-cat">Obj</span></a>
+<a class="search-item" href="api/game/obj/MtlEntry.html" data-k="api: obj obj api/game/obj/mtlentry.html"><span class="search-title">API: Obj</span><span class="search-cat">Obj</span></a>
+<a class="search-item" href="api/game/obj/ObjParser.html" data-k="api: obj obj api/game/obj/objparser.html"><span class="search-title">API: Obj</span><span class="search-cat">Obj</span></a>
+<a class="search-item" href="api/game/obj/KcmModel.html" data-k="api: obj obj api/game/obj/kcmmodel.html"><span class="search-title">API: Obj</span><span class="search-cat">Obj</span></a>
+<a class="search-item" href="api/game/math/Vec2.html" data-k="api: math math api/game/math/vec2.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/game/math/Vec3.html" data-k="api: math math api/game/math/vec3.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/game/math/Vec4.html" data-k="api: math math api/game/math/vec4.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/game/math/Mat3.html" data-k="api: math math api/game/math/mat3.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/game/math/Mat4.html" data-k="api: math math api/game/math/mat4.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/game/math/Quat.html" data-k="api: math math api/game/math/quat.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/game/math/Transform.html" data-k="api: math math api/game/math/transform.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/game/math/Rect.html" data-k="api: math math api/game/math/rect.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/game/math/Bounds.html" data-k="api: math math api/game/math/bounds.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/game/math/Random.html" data-k="api: math math api/game/math/random.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/game/math/Easing.html" data-k="api: math math api/game/math/easing.html"><span class="search-title">API: Math</span><span class="search-cat">Math</span></a>
+<a class="search-item" href="api/game/audio/Audio.html" data-k="api: audio audio api/game/audio/audio.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/audio/AudioClip.html" data-k="api: audio audio api/game/audio/audioclip.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/audio/AudioEngine.html" data-k="api: audio audio api/game/audio/audioengine.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/audio/AudioListener.html" data-k="api: audio audio api/game/audio/audiolistener.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/audio/AudioSource.html" data-k="api: audio audio api/game/audio/audiosource.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/audio/Mixer.html" data-k="api: audio audio api/game/audio/mixer.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/audio/Music.html" data-k="api: audio audio api/game/audio/music.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/audio/Sound.html" data-k="api: audio audio api/game/audio/sound.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/audio/backend/AudioBackend.html" data-k="api: audio audio api/game/audio/backend/audiobackend.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/audio/backend/NullAudioBackend.html" data-k="api: audio audio api/game/audio/backend/nullaudiobackend.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/audio/backend/OpenALBackend.html" data-k="api: audio audio api/game/audio/backend/openalbackend.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/audio/backend/OpenSLBackend.html" data-k="api: audio audio api/game/audio/backend/openslbackend.html"><span class="search-title">API: Audio</span><span class="search-cat">Audio</span></a>
+<a class="search-item" href="api/game/render/2d/SpriteBatch.html" data-k="api: render render api/game/render/2d/spritebatch.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/Camera2D.html" data-k="api: render render api/game/render/2d/camera2d.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/Canvas2D.html" data-k="api: render render api/game/render/2d/canvas2d.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/Particle2D.html" data-k="api: render render api/game/render/2d/particle2d.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/Renderer2D.html" data-k="api: render render api/game/render/2d/renderer2d.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/Sprite.html" data-k="api: render render api/game/render/2d/sprite.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/TextRenderer.html" data-k="api: render render api/game/render/2d/textrenderer.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/TextureAtlas.html" data-k="api: render render api/game/render/2d/textureatlas.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/TileMap.html" data-k="api: render render api/game/render/2d/tilemap.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/Font5x7.html" data-k="api: render render api/game/render/2d/font5x7.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/FontAtlas.html" data-k="api: render render api/game/render/2d/fontatlas.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/Png.html" data-k="api: render render api/game/render/2d/png.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/2d/Font.html" data-k="api: render render api/game/render/2d/font.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/3d/Mesh.html" data-k="api: render render api/game/render/3d/mesh.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/3d/Camera3D.html" data-k="api: render render api/game/render/3d/camera3d.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/3d/Renderer3D.html" data-k="api: render render api/game/render/3d/renderer3d.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/3d/Particle3D.html" data-k="api: render render api/game/render/3d/particle3d.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/backend/RenderBackend.html" data-k="api: render render api/game/render/backend/renderbackend.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/backend/BackendFactory.html" data-k="api: render render api/game/render/backend/backendfactory.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/backend/GLESBackend.html" data-k="api: render render api/game/render/backend/glesbackend.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/backend/NullBackend.html" data-k="api: render render api/game/render/backend/nullbackend.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/backend/VulkanBackend.html" data-k="api: render render api/game/render/backend/vulkanbackend.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/render/backend/GlesSubmit.html" data-k="api: render render api/game/render/backend/glessubmit.html"><span class="search-title">API: Render</span><span class="search-cat">Render</span></a>
+<a class="search-item" href="api/game/physics/2d/Physics2D.html" data-k="api: physics physics api/game/physics/2d/physics2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/Body2D.html" data-k="api: physics physics api/game/physics/2d/body2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/BoxCollider2D.html" data-k="api: physics physics api/game/physics/2d/boxcollider2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/BroadPhase.html" data-k="api: physics physics api/game/physics/2d/broadphase.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/CapsuleCollider2D.html" data-k="api: physics physics api/game/physics/2d/capsulecollider2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/CircleCollider2D.html" data-k="api: physics physics api/game/physics/2d/circlecollider2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/Collider2D.html" data-k="api: physics physics api/game/physics/2d/collider2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/Contact2D.html" data-k="api: physics physics api/game/physics/2d/contact2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/DistanceJoint2D.html" data-k="api: physics physics api/game/physics/2d/distancejoint2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/Joint2D.html" data-k="api: physics physics api/game/physics/2d/joint2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/Math2D.html" data-k="api: physics physics api/game/physics/2d/math2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/MotorJoint2D.html" data-k="api: physics physics api/game/physics/2d/motorjoint2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/NarrowPhase.html" data-k="api: physics physics api/game/physics/2d/narrowphase.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/PhysicsWorld2D.html" data-k="api: physics physics api/game/physics/2d/physicsworld2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/PolygonCollider2D.html" data-k="api: physics physics api/game/physics/2d/polygoncollider2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/PrismaticJoint2D.html" data-k="api: physics physics api/game/physics/2d/prismaticjoint2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/RevoluteJoint2D.html" data-k="api: physics physics api/game/physics/2d/revolutejoint2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/Solver2D.html" data-k="api: physics physics api/game/physics/2d/solver2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/Shape2D.html" data-k="api: physics physics api/game/physics/2d/shape2d.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api/game/physics/2d/JointType.html" data-k="api: physics physics api/game/physics/2d/jointtype.html"><span class="search-title">API: Physics</span><span class="search-cat">Physics</span></a>
+<a class="search-item" href="api.html" data-k="api reference reference api.html"><span class="search-title">API Reference</span><span class="search-cat">Reference</span></a>
+</div>
+<script>
+(function () {
+    var q = new URLSearchParams(window.location.search).get('q') || '';
+    var inp = document.getElementById('q');
+    var items = Array.prototype.slice.call(document.querySelectorAll('.search-item'));
+    inp.value = q;
+    function apply() {
+        var v = inp.value.toLowerCase().trim();
+        var n = 0;
+        items.forEach(function (el) {
+            var hit = !v || el.getAttribute('data-k').indexOf(v) >= 0;
+            el.style.display = hit ? '' : 'none';
+            if (hit) n += 1;
+        });
+        document.getElementById('hits').textContent = n + ' halaman';
+    }
+    inp.addEventListener('input', apply);
+    apply();
+})();
+</script>
+
+                <div class="pagination">
+                     
+                </div>
+            </div>
+        </main>
+
+        <!-- TOC -->
+        <aside class="toc" id="toc">
+            <div class="toc-title">On this page</div>
+            
+        </aside>
+
+        <!-- Mobile menu toggle -->
+        <button class="menu-toggle" id="menuToggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+    </div>
+
+    <script>
+        // Mobile menu
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+            document.addEventListener('click', (e) => {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target))
+                    sidebar.classList.remove('open');
+            });
+        }
+
+        // Copy code buttons
+        document.querySelectorAll('.code-copy').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const pre = btn.closest('.code-block').querySelector('pre');
+                navigator.clipboard.writeText(pre.textContent).then(() => {
+                    btn.classList.add('copied');
+                    btn.querySelector('span').textContent = 'Tersalin';
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.querySelector('span').textContent = 'Salin';
+                    }, 2000);
+                });
+            });
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const group = btn.closest('.tabs');
+                group.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                group.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                group.querySelector(btn.dataset.target).classList.add('active');
+            });
+        });
+
+        // TOC active state
+        const tocLinks = document.querySelectorAll('.toc a');
+        const headings = [];
+        tocLinks.forEach(a => {
+            const id = a.getAttribute('href').slice(1);
+            const h = document.getElementById(id);
+            if (h) headings.push([h, a]);
+        });
+        if (headings.length) {
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        tocLinks.forEach(a => a.classList.remove('active'));
+                        const link = headings.find(([h]) => h === e.target)?.[1];
+                        if (link) link.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-80px 0px -70% 0px' });
+            headings.forEach(([h]) => obs.observe(h));
+        }
+
+        // Search (client-side filter)
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && searchInput.value.trim()) {
+                    // Navigate to search page with query
+                    window.location.href = 'search.html?q=' + encodeURIComponent(searchInput.value.trim());
+                }
+            });
+        }
+    </script>
+</body>
+</html>
